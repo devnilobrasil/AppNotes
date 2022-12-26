@@ -10,7 +10,7 @@ import com.github.devnilobrasil.notes.model.NotesModel
 
 class NotesViewModel(application: Application): AndroidViewModel(application)
 {
-    private val notesRepository = NotesRepository.getInstance(application)
+    private val notesRepository = NotesRepository(application)
 
     private val _note = MutableLiveData<NotesModel>()
     val note : MutableLiveData<NotesModel> = _note

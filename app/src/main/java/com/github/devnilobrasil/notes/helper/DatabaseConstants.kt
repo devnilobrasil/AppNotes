@@ -4,7 +4,7 @@ class DatabaseConstants
 {
     object NOTES{
         const val ID = "notesID"
-        const val TABLE_NAME = "notes"
+        const val TABLE_NAME = "notesDB"
 
         object COLUMN{
             const val NOTES_ID = "id"

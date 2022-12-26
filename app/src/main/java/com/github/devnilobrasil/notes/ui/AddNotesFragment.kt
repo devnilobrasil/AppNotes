@@ -40,8 +40,8 @@ class AddNotesFragment : Fragment()
     private fun observe()
     {
         notesViewModel.note.observe(viewLifecycleOwner) {
-            binding.editTitleNotes.setText(it.titleNotes)
-            binding.editBodyNotes.setText(it.bodyNotes)
+            binding.editTitleNotes.setText(it.title)
+            binding.editBodyNotes.setText(it.body)
             binding.buttonSendNotes.text = getString(R.string.button_update)
         }
 
@@ -62,7 +62,11 @@ class AddNotesFragment : Fragment()
             if(titleNote.isBlank() || bodyNote.isBlank()){
                 Toast.makeText(requireContext(), R.string.fill_the_fields_correctly , Toast.LENGTH_SHORT).show()
             } else {
-                val notesModel = NotesModel(noteId, titleNote, bodyNote)
+                val notesModel = NotesModel().apply {
+                    this.id = noteId
+                    this.title = titleNote
+                    this.body = bodyNote
+                }
                 notesViewModel.saveNotesDB(notesModel)
                 findNavController().navigate(R.id.action_addNotesFragment_to_homeFragment)
             }

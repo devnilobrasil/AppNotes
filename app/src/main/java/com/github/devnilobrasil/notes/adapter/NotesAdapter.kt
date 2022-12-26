@@ -25,8 +25,8 @@ class NotesAdapter :
         // Possui a referência para os elementos de interface
         fun bind(notesModel: NotesModel)
         {
-            binding.textTitleNotes.text = notesModel.titleNotes
-            binding.textBodyNotes.text = notesModel.bodyNotes
+            binding.textTitleNotes.text = notesModel.title
+            binding.textBodyNotes.text = notesModel.body
 
             binding.cardRecycler.setOnClickListener {
                 listeners.onClick(notesModel.id)
