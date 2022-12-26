@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.github.devnilobrasil.notes.R
@@ -45,6 +44,13 @@ class AddNotesFragment : Fragment()
             binding.editBodyNotes.setText(it.bodyNotes)
             binding.buttonSendNotes.text = getString(R.string.button_update)
         }
+
+        notesViewModel.saveNotes.observe(viewLifecycleOwner){
+            if (it != ""){
+                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+            }
+        }
+
     }
 
     private fun addNotes(){
@@ -54,7 +60,7 @@ class AddNotesFragment : Fragment()
             val bodyNote = binding.editBodyNotes.text?.trim().toString()
 
             if(titleNote.isBlank() || bodyNote.isBlank()){
-                Toast.makeText(requireContext(), getString(R.string.fill_the_fields_correctly), Toast.LENGTH_SHORT).show()
+                Toast.makeText(requireContext(), R.string.fill_the_fields_correctly , Toast.LENGTH_SHORT).show()
             } else {
                 val notesModel = NotesModel(noteId, titleNote, bodyNote)
                 notesViewModel.saveNotesDB(notesModel)

@@ -9,7 +9,6 @@ import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.NotesLayoutBinding
 import com.github.devnilobrasil.notes.helper.NotesListeners
 import com.github.devnilobrasil.notes.model.NotesModel
-import com.google.android.material.bottomsheet.BottomSheetDialog
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>()
@@ -20,7 +19,7 @@ class NotesAdapter :
 
     class NotesViewHolder(
         private val binding: NotesLayoutBinding,
-        private val listeners: NotesListeners
+        private val listeners: NotesListeners,
     ) : RecyclerView.ViewHolder(binding.root)
     {
         // Possui a referência para os elementos de interface
@@ -37,7 +36,8 @@ class NotesAdapter :
                 AlertDialog.Builder(itemView.context)
                     .setTitle(R.string.remove_note_title)
                     .setMessage(R.string.confirm_remove_note)
-                    .setPositiveButton(R.string.button_yes
+                    .setPositiveButton(
+                        R.string.button_yes
                     ) { _, _ ->
                         listeners.onDelete(notesModel.id)
                         Toast.makeText(itemView.context, R.string.sucessful_remove_note, Toast.LENGTH_SHORT).show()
@@ -69,7 +69,8 @@ class NotesAdapter :
         notifyDataSetChanged()
     }
 
-    fun attachNotes(notesListeners: NotesListeners){
+    fun attachNotes(notesListeners: NotesListeners)
+    {
         listener = notesListeners
     }
 }

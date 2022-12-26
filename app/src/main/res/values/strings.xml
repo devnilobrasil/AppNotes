@@ -12,5 +12,5 @@
     <string name="button_negative">Não</string>
     <string name="sucessful_remove_note">Nota removida com sucesso!</string>
     <string name="button_update">Atualizar</string>
-    <string name="fill_the_fields_correctly">Preencha os campos corretamente!</string>
+    <string name="fill_the_fields_correctly">Preencha todos os campos corretamente!</string>
 </resources>
