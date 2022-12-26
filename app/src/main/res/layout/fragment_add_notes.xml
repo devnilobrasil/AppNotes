@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.AddNotesFragment">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_Title"
+        android:layout_width="0dp"
+        android:layout_height="70dp"
+        android:hint="@string/title_notes_hint"
+        android:textColorHint="@color/gray_500"
+
+        android:focusable="true"
+        app:boxBackgroundMode="filled"
+        app:hintTextColor="@color/gray_200"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_titleNotes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fontFamily="@font/andika"
+            android:background="@color/white"
+            android:textStyle="bold"
+            android:inputType="textCapSentences|text"
+            android:maxLines="1"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/input_body"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:gravity="top"
+        android:hint="@string/body_notes_hint"
+        android:paddingTop="8dp"
+        android:textColorHint="@color/gray_500"
+        app:expandedHintEnabled="false"
+        app:hintTextColor="@color/gray_200"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/input_Title">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edit_bodyNotes"
+            android:layout_width="match_parent"
+            android:fontFamily="@font/andika"
+            android:layout_height="match_parent"
+            android:layout_gravity="top"
+            android:background="@color/white"
+            android:gravity="top"
+            android:inputType="textCapSentences|textMultiLine"
+            android:textColor="@color/black" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/button_sendNotes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginBottom="30dp"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:text="@string/send_button"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/input_body"
+        app:layout_constraintStart_toStartOf="@id/input_body" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

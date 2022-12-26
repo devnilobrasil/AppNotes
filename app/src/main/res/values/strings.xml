@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">Notes</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_notes_fab">Add Notes</string>
+    <string name="title_notes_hint">Título</string>
+    <string name="body_notes_hint">Escreva...</string>
+    <string name="send_button">Enviar</string>
+    <string name="remove_note_title">Remover nota</string>
+    <string name="confirm_remove_note">Tem certeza que deseja remover?</string>
+    <string name="button_yes">Sim</string>
+    <string name="button_negative">Não</string>
+    <string name="sucessful_remove_note">Nota removida com sucesso!</string>
+    <string name="button_update">Atualizar</string>
+    <string name="fill_the_fields_correctly">Preencha os campos corretamente!</string>
+</resources>
