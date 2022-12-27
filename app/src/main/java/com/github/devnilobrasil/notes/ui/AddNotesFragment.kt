@@ -13,6 +13,7 @@ import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
+import com.google.android.material.appbar.MaterialToolbar
 
 
 class AddNotesFragment : Fragment()
@@ -20,6 +21,8 @@ class AddNotesFragment : Fragment()
 
     private val binding: FragmentAddNotesBinding by lazy { FragmentAddNotesBinding.inflate(layoutInflater) }
     private lateinit var notesViewModel : NotesViewModel
+
+    private lateinit var topAppBar : MaterialToolbar
 
     private var noteId = 0
 
@@ -34,6 +37,7 @@ class AddNotesFragment : Fragment()
         observe()
         addNotes()
         loadNotes()
+        appTopBar()
         return binding.root
     }
 
@@ -43,6 +47,7 @@ class AddNotesFragment : Fragment()
             binding.editTitleNotes.setText(it.title)
             binding.editBodyNotes.setText(it.body)
             binding.buttonSendNotes.text = getString(R.string.button_update)
+            binding.topAppBar.title = getString(R.string.update_note_top_bar)
         }
 
         notesViewModel.saveNotes.observe(viewLifecycleOwner){
@@ -81,6 +86,32 @@ class AddNotesFragment : Fragment()
             notesViewModel.getNote(noteId)
         }
 
+    }
+
+    private fun appTopBar(){
+        topAppBar = binding.topAppBar
+
+        topAppBar.setNavigationOnClickListener {
+            findNavController().navigate(R.id.action_addNotesFragment_to_homeFragment)
+        }
+
+        topAppBar.setOnMenuItemClickListener {
+            when(it.itemId){
+                R.id.reminder -> {
+                    Toast.makeText(requireContext(), "Reminder clicado", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.palette -> {
+                    Toast.makeText(requireContext(), "Cores clicado", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                R.id.share ->{
+                    Toast.makeText(requireContext(), "Share clicado", Toast.LENGTH_SHORT).show()
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
 }

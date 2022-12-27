@@ -13,4 +13,10 @@
     <string name="sucessful_remove_note">Nota removida com sucesso!</string>
     <string name="button_update">Atualizar</string>
     <string name="fill_the_fields_correctly">Preencha todos os campos corretamente!</string>
+    <string name="create_note">Criar Nota</string>
+    <string name="palette">Cores</string>
+    <string name="reminder">Lembrete</string>
+    <string name="update_note_top_bar">Atualizar Nota</string>
+    <string name="share_button_top">Compartilhar</string>
+    <string name="create_button">Criar</string>
 </resources>
