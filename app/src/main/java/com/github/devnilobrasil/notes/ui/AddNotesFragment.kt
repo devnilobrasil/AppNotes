@@ -14,6 +14,7 @@ import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
+import com.google.android.material.snackbar.Snackbar
 
 
 class AddNotesFragment : Fragment()
@@ -52,7 +53,14 @@ class AddNotesFragment : Fragment()
 
         notesViewModel.saveNotes.observe(viewLifecycleOwner){
             if (it != ""){
-                Toast.makeText(requireContext(), it, Toast.LENGTH_SHORT).show()
+                Snackbar.make(
+                    requireContext(),
+                    binding.buttonSendNotes,
+                    it,Snackbar.LENGTH_SHORT
+                )
+                    .setAnchorView(binding.buttonSendNotes)
+                    .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .show()
             }
         }
 
@@ -65,14 +73,23 @@ class AddNotesFragment : Fragment()
             val bodyNote = binding.editBodyNotes.text?.trim().toString()
 
             if(titleNote.isBlank() || bodyNote.isBlank()){
-                Toast.makeText(requireContext(), R.string.fill_the_fields_correctly , Toast.LENGTH_SHORT).show()
+                Snackbar.make(
+                    requireContext(),
+                    it,
+                    getString(R.string.fill_the_fields_correctly),
+                    Snackbar.LENGTH_SHORT
+                )
+                    .setAnchorView(it)
+                    .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .show()
+
             } else {
                 val notesModel = NotesModel().apply {
                     this.id = noteId
                     this.title = titleNote
                     this.body = bodyNote
                 }
-                notesViewModel.saveNotesDB(notesModel)
+                notesViewModel.saveNotesDB(notesModel, requireContext())
                 findNavController().navigate(R.id.action_addNotesFragment_to_homeFragment)
             }
         }
@@ -113,5 +130,7 @@ class AddNotesFragment : Fragment()
             }
         }
     }
+
+
 
 }

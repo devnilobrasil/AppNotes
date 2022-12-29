@@ -11,6 +11,8 @@
     <string name="button_yes">Sim</string>
     <string name="button_negative">Não</string>
     <string name="sucessful_remove_note">Nota removida com sucesso!</string>
+    <string name="sucessful_insert_note">Nota inserida com sucesso!</string>
+    <string name="sucessful_update_note">Nota atualizada com sucesso!</string>
     <string name="button_update">Atualizar</string>
     <string name="fill_the_fields_correctly">Preencha todos os campos corretamente!</string>
     <string name="create_note">Criar Nota</string>

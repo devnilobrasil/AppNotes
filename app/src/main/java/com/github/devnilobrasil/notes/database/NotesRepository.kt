@@ -16,9 +16,10 @@ class NotesRepository (context: Context)
         return notesDB.update(notesModel) > 0
     }
 
-    fun delete(noteID: Int){
+    fun delete(noteID: Int) : Boolean{
         val getNote = getSpecificNote(noteID)
         notesDB.delete(getNote)
+        return true
     }
 
     fun getSpecificNote(noteID: Int): NotesModel{

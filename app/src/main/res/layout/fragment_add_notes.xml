@@ -93,7 +93,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="54dp"
-        android:layout_marginBottom="30dp"
+        android:layout_marginBottom="22dp"
         android:padding="10dp"
         android:background="@drawable/rounded_corner_buttons"
         android:text="@string/create_button"

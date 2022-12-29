@@ -14,12 +14,13 @@ import com.github.devnilobrasil.notes.databinding.FragmentHomeBinding
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.helper.NotesListeners
 import com.github.devnilobrasil.notes.viewmodels.HomeViewModel
+import com.google.android.material.snackbar.Snackbar
 
 class HomeFragment : Fragment()
 {
 
-    private val binding : FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
-    private lateinit var homeViewModel : HomeViewModel
+    private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
+    private lateinit var homeViewModel: HomeViewModel
     private val adapter = NotesAdapter()
 
     override fun onCreateView(
@@ -30,7 +31,8 @@ class HomeFragment : Fragment()
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
         val recyclerView = binding.recyclerView
-        recyclerView.layoutManager = StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = adapter
 
 
@@ -48,20 +50,37 @@ class HomeFragment : Fragment()
 
     private fun observe()
     {
-        homeViewModel.listAllNotes.observe(viewLifecycleOwner){
+        homeViewModel.listAllNotes.observe(viewLifecycleOwner) {
             adapter.updateNotes(it)
+        }
+
+        homeViewModel.delete.observe(viewLifecycleOwner) {
+            if (it != "")
+            {
+                Snackbar.make(
+                    requireContext(),
+                    binding.floatingButton,
+                    it, Snackbar.LENGTH_SHORT
+                )
+                    .setAnchorView(binding.floatingButton)
+                    .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .show()
+            }
         }
     }
 
-    private fun goToAddNotesFragment(){
+    private fun goToAddNotesFragment()
+    {
         binding.floatingButton.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_addNotesFragment)
         }
     }
 
-    private fun eventNotes(){
+    private fun eventNotes()
+    {
 
-        val listener = object : NotesListeners{
+        val listener = object : NotesListeners
+        {
             override fun onClick(id: Int)
             {
                 val bundle = Bundle()
@@ -71,16 +90,12 @@ class HomeFragment : Fragment()
 
             override fun onDelete(id: Int)
             {
-                homeViewModel.deleteNote(id)
+                homeViewModel.deleteNote(id, requireContext())
                 homeViewModel.getAllNotes()
             }
         }
         adapter.attachNotes(listener)
     }
-
-
-
-
 
 
 }

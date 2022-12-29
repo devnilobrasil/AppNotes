@@ -2,7 +2,6 @@ package com.github.devnilobrasil.notes.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.github.devnilobrasil.notes.R
@@ -22,6 +21,7 @@ class NotesAdapter :
         private val listeners: NotesListeners,
     ) : RecyclerView.ViewHolder(binding.root)
     {
+
         // Possui a referência para os elementos de interface
         fun bind(notesModel: NotesModel)
         {
@@ -33,6 +33,7 @@ class NotesAdapter :
             }
 
             binding.cardRecycler.setOnLongClickListener {
+
                 AlertDialog.Builder(itemView.context)
                     .setTitle(R.string.remove_note_title)
                     .setMessage(R.string.confirm_remove_note)
@@ -40,7 +41,6 @@ class NotesAdapter :
                         R.string.button_yes
                     ) { _, _ ->
                         listeners.onDelete(notesModel.id)
-                        Toast.makeText(itemView.context, R.string.sucessful_remove_note, Toast.LENGTH_SHORT).show()
                     }
                     .setNegativeButton(R.string.button_negative, null)
                     .create()
