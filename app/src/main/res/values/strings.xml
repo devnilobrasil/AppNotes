@@ -21,4 +21,5 @@
     <string name="update_note_top_bar">Atualizar Nota</string>
     <string name="share_button_top">Compartilhar</string>
     <string name="create_button">Criar</string>
+    <string name="search">Search</string>
 </resources>

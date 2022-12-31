@@ -64,6 +64,7 @@ class HomeFragment : Fragment()
                 )
                     .setAnchorView(binding.floatingButton)
                     .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .setTextColor(resources.getColor(R.color.black, null))
                     .show()
             }
         }

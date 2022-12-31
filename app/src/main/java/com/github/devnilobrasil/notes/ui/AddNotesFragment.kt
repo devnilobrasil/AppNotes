@@ -60,6 +60,7 @@ class AddNotesFragment : Fragment()
                 )
                     .setAnchorView(binding.buttonSendNotes)
                     .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .setTextColor(resources.getColor(R.color.black, null))
                     .show()
             }
         }
@@ -81,6 +82,7 @@ class AddNotesFragment : Fragment()
                 )
                     .setAnchorView(it)
                     .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .setTextColor(resources.getColor(R.color.black, null))
                     .show()
 
             } else {
