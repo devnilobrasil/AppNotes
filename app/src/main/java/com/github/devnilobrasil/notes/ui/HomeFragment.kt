@@ -1,10 +1,12 @@
 package com.github.devnilobrasil.notes.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.widget.SearchView
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
@@ -13,8 +15,10 @@ import com.github.devnilobrasil.notes.adapter.NotesAdapter
 import com.github.devnilobrasil.notes.databinding.FragmentHomeBinding
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.helper.NotesListeners
+import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.viewmodels.HomeViewModel
 import com.google.android.material.snackbar.Snackbar
+
 
 class HomeFragment : Fragment()
 {
@@ -22,6 +26,8 @@ class HomeFragment : Fragment()
     private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
     private lateinit var homeViewModel: HomeViewModel
     private val adapter = NotesAdapter()
+    private lateinit var searchBar : SearchView
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,15 +36,11 @@ class HomeFragment : Fragment()
     {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
-        val recyclerView = binding.recyclerView
-        recyclerView.layoutManager =
-            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
-        recyclerView.adapter = adapter
-
-
+        recyclerView()
         eventNotes()
         observe()
         goToAddNotesFragment()
+        searchView()
         return binding.root
     }
 
@@ -98,5 +100,41 @@ class HomeFragment : Fragment()
         adapter.attachNotes(listener)
     }
 
+    private fun searchView(){
+        binding.searchBar.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+            override fun onQueryTextSubmit(query: String): Boolean
+            {
+                getResults(query)
+                return false
+            }
 
+            override fun onQueryTextChange(newText: String): Boolean
+            {
+                getResults(newText)
+                return true
+            }
+
+            private fun getResults(newText: String)
+            {
+                val queryText = "%$newText%"
+                homeViewModel.filterNote(queryText).observe(viewLifecycleOwner, object : Observer<List<NotesModel>>{
+                    override fun onChanged(t: List<NotesModel>?)
+                    {
+                        if(t != null) return adapter.updateNotes(t)
+                    }
+
+                })
+
+            }
+
+        })
+    }
+
+    private fun recyclerView(){
+        val recyclerView = binding.recyclerView
+        recyclerView.layoutManager =
+            StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
+        recyclerView.adapter = adapter
+
+    }
 }

@@ -1,6 +1,7 @@
 package com.github.devnilobrasil.notes.database
 
 import android.content.Context
+import androidx.lifecycle.LiveData
 import com.github.devnilobrasil.notes.model.NotesModel
 
 class NotesRepository (context: Context)
@@ -28,6 +29,10 @@ class NotesRepository (context: Context)
 
     fun getAllNotes() : List<NotesModel>{
         return notesDB.getAllNotes()
+    }
+
+    fun getNotesByName(name: String): LiveData<List<NotesModel>>{
+        return notesDB.getNotesByName(name)
     }
 }
 
