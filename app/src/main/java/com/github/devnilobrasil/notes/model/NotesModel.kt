@@ -7,19 +7,22 @@ import com.github.devnilobrasil.notes.helper.DatabaseConstants
 
 
 @Entity(
-    tableName = DatabaseConstants.NOTES.TABLE_NAME
+    tableName = DatabaseConstants.Notes.TABLE_NAME
 )
 class NotesModel
 {
     @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = DatabaseConstants.NOTES.COLUMN.NOTES_ID)
+    @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_ID)
     var id: Int = 0
 
-    @ColumnInfo(name = DatabaseConstants.NOTES.COLUMN.NOTES_TITLE)
+    @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_TITLE)
     var title: String = ""
 
-    @ColumnInfo(name = DatabaseConstants.NOTES.COLUMN.NOTES_BODY)
+    @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_BODY)
     var body: String = ""
+
+    @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_COLOR)
+    var color : Int = DatabaseConstants.COLORS.IdColors.DEFAULT
 
 
 }

@@ -4,5 +4,7 @@
         <item name="android:windowBackground">@drawable/rounded_corner_alert_dialog</item>
     </style>
 
-
+    <style name="TestTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/purple_500</item>
+    </style>
 </resources>

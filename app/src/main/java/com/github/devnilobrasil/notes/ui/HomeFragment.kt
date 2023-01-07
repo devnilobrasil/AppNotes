@@ -26,8 +26,6 @@ class HomeFragment : Fragment()
     private val binding: FragmentHomeBinding by lazy { FragmentHomeBinding.inflate(layoutInflater) }
     private lateinit var homeViewModel: HomeViewModel
     private val adapter = NotesAdapter()
-    private lateinit var searchBar : SearchView
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -87,7 +85,7 @@ class HomeFragment : Fragment()
             override fun onClick(id: Int)
             {
                 val bundle = Bundle()
-                bundle.putInt(DatabaseConstants.NOTES.ID, id)
+                bundle.putInt(DatabaseConstants.Notes.ID, id)
                 findNavController().navigate(R.id.action_homeFragment_to_addNotesFragment, bundle)
             }
 

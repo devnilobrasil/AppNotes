@@ -17,4 +17,5 @@
     <string name="sucessful_remove_note">Nota removida com sucesso!</string>
     <string name="fill_the_fields_correctly">Preencha todos os campos corretamente!</string>
     <string name="reminder">Lembrete</string>
+    <string name="colors">Cores</string>
 </resources>
