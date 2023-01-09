@@ -36,6 +36,7 @@ class NotesAdapter :
                             itemView.context,
                             notesModel.color)))
 
+
             binding.cardRecycler.setOnClickListener {
                 listeners.onClick(notesModel.id)
             }
@@ -81,4 +82,5 @@ class NotesAdapter :
     {
         listener = notesListeners
     }
+
 }

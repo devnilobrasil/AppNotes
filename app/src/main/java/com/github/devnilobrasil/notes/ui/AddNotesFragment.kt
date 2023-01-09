@@ -1,20 +1,18 @@
 package com.github.devnilobrasil.notes.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.github.devnilobrasil.notes.helper.DatabaseConstants.COLORS.NameColors
-import com.github.devnilobrasil.notes.helper.DatabaseConstants.COLORS.IdColors
 import androidx.navigation.fragment.findNavController
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
+import com.github.devnilobrasil.notes.helper.DatabaseConstants.COLORS.IdColors
+import com.github.devnilobrasil.notes.helper.DatabaseConstants.COLORS.NameColors
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
@@ -35,7 +33,7 @@ class AddNotesFragment : Fragment()
 
     private var noteId = 0
 
-    private var colorChoice = IdColors.DEFAULT
+    private var colorChoice = NotesModel().color
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +45,7 @@ class AddNotesFragment : Fragment()
         addNotes()
         loadNotes()
         appTopBar()
+
         return binding.root
     }
 
@@ -58,6 +57,7 @@ class AddNotesFragment : Fragment()
             binding.buttonSendNotes.text = getString(R.string.button_update)
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
             binding.topAppBar.setBackgroundColor(ContextCompat.getColor(requireContext(), it.color))
+            statusBarColor(it.color)
         }
 
         notesViewModel.saveNotes.observe(viewLifecycleOwner) {
@@ -172,6 +172,7 @@ class AddNotesFragment : Fragment()
 
                             }
                             topAppBar.setBackgroundColor(ContextCompat.getColor(requireContext(), colorChoice))
+                            statusBarColor(colorChoice)
                         }
                         create()
                         show()
@@ -189,8 +190,10 @@ class AddNotesFragment : Fragment()
 
         }
 
-
     }
-
+    private fun statusBarColor(color: Int){
+        val window: Window = requireActivity().window
+        window.statusBarColor = ContextCompat.getColor(requireContext(), color)
+    }
 
 }

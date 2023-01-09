@@ -30,7 +30,7 @@ class DatabaseConstants
 
         }
         object IdColors {
-            const val DEFAULT = R.color.teal_700
+            const val DEFAULT = R.color.white
             const val RED = R.color.red_400
             const val PURPLE = R.color.purple_400
             const val GREEN = R.color.green_400

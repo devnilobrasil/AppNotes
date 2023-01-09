@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.Window
 import androidx.appcompat.widget.SearchView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -34,6 +36,7 @@ class HomeFragment : Fragment()
     {
         homeViewModel = ViewModelProvider(this)[HomeViewModel::class.java]
 
+
         recyclerView()
         eventNotes()
         observe()
@@ -46,6 +49,7 @@ class HomeFragment : Fragment()
     {
         super.onResume()
         homeViewModel.getAllNotes()
+        statusBarColor()
     }
 
     private fun observe()
@@ -134,5 +138,10 @@ class HomeFragment : Fragment()
             StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL)
         recyclerView.adapter = adapter
 
+    }
+
+    private fun statusBarColor(){
+        val window: Window = requireActivity().window
+        window.statusBarColor = ContextCompat.getColor(requireContext(), DatabaseConstants.COLORS.IdColors.DEFAULT)
     }
 }
