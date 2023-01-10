@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_corner_alert_dialog"
+    android:backgroundTint="@color/white"
+    android:elevation="8dp"
+    android:paddingHorizontal="20dp"
+    android:paddingTop="8dp"
+    android:paddingBottom="24dp">
+
+    <TextView
+        android:id="@+id/text_title_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/andika"
+        android:text="@string/colors"
+        android:textColor="@color/black"
+        android:textSize="26sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/color_default"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:layout_marginTop="24dp"
+        android:background="@drawable/circle_colors"
+        app:layout_constraintEnd_toStartOf="@id/color_red"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/text_title_color" />
+
+    <View
+        android:id="@+id/color_red"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/red_400"
+        app:layout_constraintBottom_toBottomOf="@id/color_default"
+        app:layout_constraintEnd_toStartOf="@id/color_purple"
+        app:layout_constraintStart_toEndOf="@id/color_default"
+        app:layout_constraintTop_toTopOf="@id/color_default" />
+
+    <View
+        android:id="@+id/color_purple"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/purple_400"
+        app:layout_constraintBottom_toBottomOf="@id/color_red"
+        app:layout_constraintEnd_toStartOf="@id/color_green"
+        app:layout_constraintStart_toEndOf="@id/color_red"
+        app:layout_constraintTop_toTopOf="@id/color_red" />
+
+    <View
+        android:id="@+id/color_green"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:layout_marginEnd="@dimen/margin_colors"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/green_400"
+        app:layout_constraintBottom_toBottomOf="@id/color_purple"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/color_purple"
+        app:layout_constraintTop_toTopOf="@id/color_purple" />
+
+    <View
+        android:id="@+id/color_grey"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:layout_marginTop="28dp"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/grey_400"
+        app:layout_constraintEnd_toStartOf="@id/color_orange"
+        app:layout_constraintHorizontal_chainStyle="packed"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/color_default" />
+
+    <View
+        android:id="@+id/color_orange"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/orange_400"
+        app:layout_constraintBottom_toBottomOf="@id/color_grey"
+        app:layout_constraintEnd_toStartOf="@id/color_indigo"
+        app:layout_constraintStart_toEndOf="@id/color_grey"
+        app:layout_constraintTop_toTopOf="@id/color_grey" />
+
+    <View
+        android:id="@+id/color_indigo"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/indigo_400"
+        app:layout_constraintBottom_toBottomOf="@id/color_orange"
+        app:layout_constraintEnd_toStartOf="@id/color_yellow"
+        app:layout_constraintStart_toEndOf="@id/color_orange"
+        app:layout_constraintTop_toTopOf="@id/color_orange" />
+
+    <View
+        android:id="@+id/color_yellow"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="@dimen/margin_colors"
+        android:layout_marginEnd="@dimen/margin_colors"
+        android:background="@drawable/circle_colors"
+        android:backgroundTint="@color/yellow_400"
+        app:layout_constraintBottom_toBottomOf="@id/color_indigo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/color_indigo"
+        app:layout_constraintTop_toTopOf="@id/color_indigo" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
