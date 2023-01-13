@@ -7,6 +7,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Update
 import com.github.devnilobrasil.notes.model.NotesModel
+import java.util.*
 
 @Dao
 interface NotesDao
@@ -23,9 +24,14 @@ interface NotesDao
     @Query("SELECT * FROM notesDB WHERE id = :id")
     fun getSpecificNote(id: Int): NotesModel
 
+    @Query("SELECT * FROM notesDB WHERE notesTime = :time")
+    fun getTimeNotes(time: Calendar): NotesModel
+
     @Query("SELECT * FROM notesDB ORDER BY id DESC")
     fun getAllNotes() : List<NotesModel>
 
     @Query("SELECT * FROM notesDB WHERE LOWER (notesTitle) LIKE :noteFilter ORDER BY id DESC")
     fun getNotesByName(noteFilter: String) : LiveData<List<NotesModel>>
+
+
 }

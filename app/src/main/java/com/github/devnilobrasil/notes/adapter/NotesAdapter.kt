@@ -2,6 +2,7 @@ package com.github.devnilobrasil.notes.adapter
 
 import android.content.res.ColorStateList
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
@@ -29,6 +30,8 @@ class NotesAdapter :
         {
             binding.textTitleNotes.text = notesModel.title
             binding.textBodyNotes.text = notesModel.body
+            binding.textReminder.text = notesModel.offsetDateTime
+            binding.textReminder.visibility = View.VISIBLE
             binding.cardRecycler
                 .setCardBackgroundColor(
                     ColorStateList
@@ -57,6 +60,7 @@ class NotesAdapter :
                 true
             }
         }
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder

@@ -4,9 +4,12 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.github.devnilobrasil.notes.model.NotesModel
+import com.github.devnilobrasil.notes.helper.DateConverters
 
 @Database(entities = [NotesModel::class], version = 1)
+@TypeConverters(DateConverters::class)
 abstract class NotesDatabase : RoomDatabase()
 {
 
@@ -35,11 +38,7 @@ abstract class NotesDatabase : RoomDatabase()
         private val MIGRATION_1_2: Migration = object : Migration(1, 2){
             override fun migrate(database: SupportSQLiteDatabase)
             {
-
             }
-
-
-
         }
 */
     }

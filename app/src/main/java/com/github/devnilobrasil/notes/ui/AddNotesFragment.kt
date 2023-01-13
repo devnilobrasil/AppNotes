@@ -11,19 +11,19 @@ import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
 import com.github.devnilobrasil.notes.helper.ColorsDialog
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
+import com.github.devnilobrasil.notes.helper.ReminderDialog
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
-import com.google.android.material.snackbar.Snackbar
+import java.text.SimpleDateFormat
+import java.util.*
 
 
 class AddNotesFragment : Fragment()
 {
 
     private val binding: FragmentAddNotesBinding by lazy {
-        FragmentAddNotesBinding.inflate(
-            layoutInflater
-        )
+        FragmentAddNotesBinding.inflate(layoutInflater)
     }
 
     private lateinit var notesViewModel: NotesViewModel
@@ -32,7 +32,8 @@ class AddNotesFragment : Fragment()
 
     private var noteId = 0
 
-    private val dialog : ColorsDialog = ColorsDialog()
+    private val colorsDialog : ColorsDialog = ColorsDialog()
+    private val reminderDialog : ReminderDialog = ReminderDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -40,10 +41,12 @@ class AddNotesFragment : Fragment()
     ): View
     {
         notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
+
         observe()
         addNotes()
         loadNotes()
         appTopBar()
+
 
         return binding.root
     }
@@ -53,48 +56,21 @@ class AddNotesFragment : Fragment()
         notesViewModel.note.observe(viewLifecycleOwner) {
             binding.editTitleNotes.setText(it.title)
             binding.editBodyNotes.setText(it.body)
-            binding.buttonSendNotes.text = getString(R.string.button_update)
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
-            dialog.colorChoice = it.color
+            colorsDialog.colorChoice = it.color
             statusBarColor(it.color)
-        }
-
-        notesViewModel.saveNotes.observe(viewLifecycleOwner) {
-            if (it != "")
-            {
-                Snackbar.make(requireContext(),
-                    binding.buttonSendNotes,
-                    it,
-                    Snackbar.LENGTH_SHORT)
-                    .setAnchorView(binding.buttonSendNotes)
-                    .setBackgroundTint(resources.getColor(R.color.teal_100, null))
-                    .setTextColor(resources.getColor(R.color.black, null))
-                    .show()
-            }
         }
 
     }
 
     private fun addNotes()
     {
-        binding.buttonSendNotes.setOnClickListener {
-
             val titleNote = binding.editTitleNotes.text?.trim().toString()
             val bodyNote = binding.editBodyNotes.text?.trim().toString()
 
             if (titleNote.isBlank() || bodyNote.isBlank())
             {
-                Snackbar.make(
-                    requireContext(),
-                    it,
-                    getString(R.string.fill_the_fields_correctly),
-                    Snackbar.LENGTH_SHORT
-                )
-                    .setAnchorView(it)
-                    .setBackgroundTint(resources.getColor(R.color.teal_100, null))
-                    .setTextColor(resources.getColor(R.color.black, null))
-                    .show()
-
+                return
             }
             else
             {
@@ -102,13 +78,12 @@ class AddNotesFragment : Fragment()
                     this.id = noteId
                     this.title = titleNote
                     this.body = bodyNote
-                    this.color = dialog.colorChoice
+                    this.color = colorsDialog.colorChoice
+                    this.offsetDateTime = timeStampToString(reminderDialog.dateLong)
 
                 }
                 notesViewModel.saveNotesDB(notesModel, requireContext())
-                findNavController().navigate(R.id.action_addNotesFragment_to_homeFragment)
             }
-        }
     }
 
     private fun loadNotes()
@@ -127,7 +102,9 @@ class AddNotesFragment : Fragment()
         topAppBar = binding.topAppBar
 
         topAppBar.setNavigationOnClickListener {
+            addNotes()
             findNavController().navigate(R.id.action_addNotesFragment_to_homeFragment)
+
         }
 
         topAppBar.setOnMenuItemClickListener {
@@ -135,12 +112,12 @@ class AddNotesFragment : Fragment()
             {
                 R.id.reminder ->
                 {
-                    Toast.makeText(requireContext(), "Reminder clicado", Toast.LENGTH_SHORT).show()
+                    reminderDialog.show(childFragmentManager, reminderDialog.tag)
                     true
                 }
                 R.id.palette ->
                 {
-                    dialog.show(childFragmentManager, dialog.tag)
+                    colorsDialog.show(childFragmentManager, colorsDialog.tag)
                     true
                 }
                 R.id.share ->
@@ -159,6 +136,13 @@ class AddNotesFragment : Fragment()
         val window: Window = requireActivity().window
         window.statusBarColor = ContextCompat.getColor(requireContext(), color)
         topAppBar.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
+        binding.viewBottom.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
+    }
+
+    private fun timeStampToString(c: Long): String
+    {
+        val sdf = SimpleDateFormat("EEE, dd MMMM", Locale.getDefault())
+        return sdf.format(c)
     }
 
 }

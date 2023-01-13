@@ -21,11 +21,12 @@
     <androidx.appcompat.widget.SearchView
         android:id="@+id/searchBar"
         android:layout_width="match_parent"
+        android:backgroundTint="@color/color_default"
         android:layout_height="@dimen/car_ui_toolbar_search_height"
-        android:layout_marginHorizontal="16dp"
+        android:layout_marginHorizontal="10dp"
         android:layout_marginTop="12dp"
         android:background="@drawable/rounded_corner_buttons"
-        android:backgroundTint="@color/grey_200"
+        android:elevation="2dp"
         app:defaultQueryHint="Notas..."
         app:iconifiedByDefault="false"
         app:layout_constraintEnd_toEndOf="parent"
@@ -38,11 +39,14 @@
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floating_button"
         android:layout_width="wrap_content"
+        android:backgroundTint="@color/color_default"
         android:layout_height="wrap_content"
+        android:elevation="2dp"
+        android:src="@drawable/ic_note"
         android:layout_marginEnd="16dp"
-        android:layout_marginBottom="24dp"
+        android:layout_marginBottom="32dp"
         android:contentDescription="@string/add_notes_fab"
-        android:src="@drawable/ic_add"
+        app:borderWidth="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
 

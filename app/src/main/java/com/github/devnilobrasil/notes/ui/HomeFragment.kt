@@ -42,6 +42,7 @@ class HomeFragment : Fragment()
         observe()
         goToAddNotesFragment()
         searchView()
+
         return binding.root
     }
 
@@ -67,7 +68,7 @@ class HomeFragment : Fragment()
                     it, Snackbar.LENGTH_SHORT
                 )
                     .setAnchorView(binding.floatingButton)
-                    .setBackgroundTint(resources.getColor(R.color.teal_100, null))
+                    .setBackgroundTint(resources.getColor(R.color.color_default, null))
                     .setTextColor(resources.getColor(R.color.black, null))
                     .show()
             }
@@ -142,6 +143,6 @@ class HomeFragment : Fragment()
 
     private fun statusBarColor(){
         val window: Window = requireActivity().window
-        window.statusBarColor = ContextCompat.getColor(requireContext(), DatabaseConstants.COLORS.IdColors.DEFAULT)
+        window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
     }
 }

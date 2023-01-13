@@ -5,7 +5,6 @@ import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 
-
 @Entity(
     tableName = DatabaseConstants.Notes.TABLE_NAME
 )
@@ -23,6 +22,12 @@ class NotesModel
 
     @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_COLOR)
     var color : Int = DatabaseConstants.COLORS.IdColors.DEFAULT
+
+    @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_TIME)
+    var offsetDateTime : String? = null
+
+
+
 
 
 }

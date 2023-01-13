@@ -17,11 +17,7 @@ class ColorsDialog : DialogFragment()
 
     var colorChoice = notesModel.color
 
-
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,b: Bundle?
     ): View
     {
         return binding.root.let {
@@ -46,6 +42,19 @@ class ColorsDialog : DialogFragment()
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         super.onViewCreated(view, savedInstanceState)
+        colors()
+
+    }
+
+     private fun statusBarColor(color: Int){
+        val window: Window = requireActivity().window
+        window.statusBarColor = ContextCompat.getColor(requireContext(), color)
+        window.findViewById<View>(R.id.topAppBar).setBackgroundColor(ContextCompat.getColor(requireContext(), color))
+        window.findViewById<View>(R.id.view_bottom).setBackgroundColor(ContextCompat.getColor(requireContext(), color))
+    }
+
+    private fun colors(){
+
 
         binding.colorDefault.setOnClickListener {
             colorChoice = IdColors.DEFAULT
@@ -95,13 +104,10 @@ class ColorsDialog : DialogFragment()
             dismiss()
         }
 
+
     }
 
-    private fun statusBarColor(color: Int){
-        val window: Window = requireActivity().window
-        window.statusBarColor = ContextCompat.getColor(requireContext(), color)
-        window.findViewById<View>(R.id.topAppBar).setBackgroundColor(ContextCompat.getColor(requireContext(), color))
-    }
+
 
 
 }

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="day_reminder">
+        <item>@string/today</item>
+        <item>@string/tomorrow</item>
+        <item>@string/pick_a_date</item>
+
+    </string-array>
+
+</resources>

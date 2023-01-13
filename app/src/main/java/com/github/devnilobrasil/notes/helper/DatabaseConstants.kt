@@ -13,24 +13,14 @@ class DatabaseConstants
             const val NOTES_TITLE = "notesTitle"
             const val NOTES_BODY = "notesBody"
             const val NOTES_COLOR = "notesColor"
+            const val NOTES_TIME = "notesTime"
         }
     }
 
     object COLORS{
 
-        object NameColors{
-            const val DEFAULT = "Padrão"
-            const val RED = "Vermelho"
-            const val PURPLE = "Roxo"
-            const val GREEN = "Verde"
-            const val GREY = "Cinza"
-            const val ORANGE = "Laranja"
-            const val INDIGO = "Indigo"
-            const val YELLOW = "Amarelo"
-
-        }
         object IdColors {
-            const val DEFAULT = R.color.white
+            const val DEFAULT = R.color.color_default
             const val RED = R.color.red_400
             const val PURPLE = R.color.purple_400
             const val GREEN = R.color.green_400
@@ -40,7 +30,6 @@ class DatabaseConstants
             const val YELLOW = R.color.yellow_400
 
         }
-
 
     }
 

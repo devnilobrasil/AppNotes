@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Notes</string>
+    <string name="app_name">Nota10</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="add_notes_fab">Add Notes</string>
@@ -23,4 +23,16 @@
     <string name="create_button">Criar</string>
     <string name="search">Search</string>
     <string name="colors">Cores</string>
+    <string name="reminder_title">Lembrete</string>
+
+    <string name="today">Hoje</string>
+    <string name="tomorrow">Amanhã</string>
+    <string name="pick_a_date">Escolha uma data...</string>
+    <string name="pick_a_hour">Escolha um horário...</string>
+    <string name="button_confirm">OK</string>
+    <string name="button_cancel">Cancelar</string>
+
+    <string name="date_format">%1d de %2s de %3d</string>
+    <string name="time_format">%1d:%2d</string>
+
 </resources>

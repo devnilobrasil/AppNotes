@@ -14,108 +14,106 @@
         android:id="@+id/text_title_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/andika"
+        style="@style/Titles_Dialog"
         android:text="@string/colors"
-        android:textColor="@color/black"
-        android:textSize="26sp"
-        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_default"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
         android:layout_marginTop="24dp"
-        android:background="@drawable/circle_colors"
+        style="@style/CardNoteTheme_Default"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toStartOf="@id/color_red"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/text_title_color" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_red"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/red_400"
+        style="@style/CardNoteTheme_Red"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@id/color_default"
         app:layout_constraintEnd_toStartOf="@id/color_purple"
         app:layout_constraintStart_toEndOf="@id/color_default"
         app:layout_constraintTop_toTopOf="@id/color_default" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_purple"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/purple_400"
+        style="@style/CardNoteTheme_Purple"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@id/color_red"
         app:layout_constraintEnd_toStartOf="@id/color_green"
         app:layout_constraintStart_toEndOf="@id/color_red"
         app:layout_constraintTop_toTopOf="@id/color_red" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_green"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
         android:layout_marginEnd="@dimen/margin_colors"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/green_400"
+        style="@style/CardNoteTheme_Green"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@id/color_purple"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/color_purple"
         app:layout_constraintTop_toTopOf="@id/color_purple" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_grey"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
         android:layout_marginTop="28dp"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/grey_400"
+        style="@style/CardNoteTheme_Grey"
+        app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toStartOf="@id/color_orange"
         app:layout_constraintHorizontal_chainStyle="packed"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/color_default" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_orange"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/orange_400"
+        style="@style/CardNoteTheme_Orange"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@id/color_grey"
         app:layout_constraintEnd_toStartOf="@id/color_indigo"
         app:layout_constraintStart_toEndOf="@id/color_grey"
         app:layout_constraintTop_toTopOf="@id/color_grey" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_indigo"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/indigo_400"
+        style="@style/CardNoteTheme_Indigo"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@id/color_orange"
         app:layout_constraintEnd_toStartOf="@id/color_yellow"
         app:layout_constraintStart_toEndOf="@id/color_orange"
         app:layout_constraintTop_toTopOf="@id/color_orange" />
 
-    <View
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/color_yellow"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
         android:layout_marginEnd="@dimen/margin_colors"
-        android:background="@drawable/circle_colors"
-        android:backgroundTint="@color/yellow_400"
+        style="@style/CardNoteTheme_Yellow"
+        app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@id/color_indigo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@id/color_indigo"
