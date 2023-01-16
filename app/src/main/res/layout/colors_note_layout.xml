@@ -75,7 +75,7 @@
         android:layout_height="50dp"
         android:layout_marginStart="@dimen/margin_colors"
         android:layout_marginTop="28dp"
-        style="@style/CardNoteTheme_Grey"
+        style="@style/CardNoteTheme_Teal"
         app:cardCornerRadius="20dp"
         app:layout_constraintEnd_toStartOf="@id/color_orange"
         app:layout_constraintHorizontal_chainStyle="packed"

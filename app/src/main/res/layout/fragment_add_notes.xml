@@ -50,6 +50,7 @@
         app:boxStrokeColor="@{color.colorChoice}"
         android:textColorHint="@color/grey_500"
         app:boxBackgroundMode="filled"
+        android:paddingTop="8dp"
         app:hintTextColor="@color/grey_200"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

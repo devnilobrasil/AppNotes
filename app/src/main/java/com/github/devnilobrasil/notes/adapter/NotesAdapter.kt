@@ -31,7 +31,7 @@ class NotesAdapter :
             binding.textTitleNotes.text = notesModel.title
             binding.textBodyNotes.text = notesModel.body
             binding.textReminder.text = notesModel.offsetDateTime
-            binding.textReminder.visibility = View.VISIBLE
+            binding.cardReminderTag.visibility = View.VISIBLE
             binding.cardRecycler
                 .setCardBackgroundColor(
                     ColorStateList

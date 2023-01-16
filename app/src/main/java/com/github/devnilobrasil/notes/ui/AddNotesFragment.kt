@@ -141,7 +141,7 @@ class AddNotesFragment : Fragment()
 
     private fun timeStampToString(c: Long): String
     {
-        val sdf = SimpleDateFormat("EEE, dd MMMM", Locale.getDefault())
+        val sdf = SimpleDateFormat("EEE, dd MMM", Locale.getDefault())
         return sdf.format(c)
     }
 

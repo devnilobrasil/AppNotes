@@ -81,7 +81,7 @@ class ColorsDialog : DialogFragment()
         }
 
         binding.colorGrey.setOnClickListener {
-            colorChoice = IdColors.GREY
+            colorChoice = IdColors.TEAL
             statusBarColor(colorChoice)
             dismiss()
         }

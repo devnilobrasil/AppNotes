@@ -24,7 +24,7 @@ class DatabaseConstants
             const val RED = R.color.red_400
             const val PURPLE = R.color.purple_400
             const val GREEN = R.color.green_400
-            const val GREY = R.color.grey_400
+            const val TEAL = R.color.teal_400
             const val ORANGE = R.color.orange_400
             const val INDIGO = R.color.indigo_400
             const val YELLOW = R.color.yellow_400

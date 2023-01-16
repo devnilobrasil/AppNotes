@@ -2,11 +2,9 @@ package com.github.devnilobrasil.notes.viewmodels
 
 import android.app.Application
 import android.content.Context
-import android.text.TextUtils
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.Transformations
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.database.NotesRepository
 import com.github.devnilobrasil.notes.model.NotesModel

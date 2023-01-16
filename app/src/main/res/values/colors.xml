@@ -17,13 +17,15 @@
 <!-- Colors Note -->
     <color name="red_400">#ef9a9a</color>
     <color name="purple_400">#e1bee7</color>
-    <color name="teal_400">#4db6ac</color>
+    <color name="teal_400">#b2dfdb</color>
     <color name="orange_400">#ffb74d</color>
     <color name="grey_400">#e0e0e0</color>
+    <color name="grey_300">#eeeeee</color>
     <color name="green_400">#a5d6a7</color>
     <color name="indigo_400">#9fa8da</color>
     <color name="yellow_400">#ffe082</color>
     <color name="color_default">#E3F2FD</color>
+
 
 
 </resources>

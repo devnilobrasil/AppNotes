@@ -54,16 +54,51 @@
             app:layout_constraintTop_toBottomOf="@id/separator"
             tools:text="Corpo" />
 
-        <TextView
-            android:id="@+id/text_reminder"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_reminder_tag"
             android:layout_width="wrap_content"
-            android:textColor="@color/black"
+            app:strokeWidth="0dp"
             android:layout_height="wrap_content"
-            android:text="Lembrete"
-            android:visibility="gone"
             android:layout_marginTop="6dp"
+            android:visibility="visible"
+            app:cardBackgroundColor="@color/grey_300"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_bodyNotes"
-            app:layout_constraintStart_toStartOf="parent"/>
+            >
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp">
+
+                <TextView
+                    android:id="@+id/text_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lembrete"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/image_reminder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_reminder"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="4dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_alarm"
+                    app:layout_constraintBottom_toBottomOf="@id/text_reminder"
+                    app:layout_constraintStart_toEndOf="@id/text_reminder"
+                    app:layout_constraintTop_toTopOf="@id/text_reminder" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
