@@ -11,6 +11,8 @@ import com.github.devnilobrasil.notes.databinding.NotesLayoutBinding
 import com.github.devnilobrasil.notes.helper.NotesListeners
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import java.text.SimpleDateFormat
+import java.util.*
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>()
@@ -30,8 +32,14 @@ class NotesAdapter :
         {
             binding.textTitleNotes.text = notesModel.title
             binding.textBodyNotes.text = notesModel.body
-            binding.textReminder.text = notesModel.offsetDateTime
-            binding.cardReminderTag.visibility = View.VISIBLE
+            if (notesModel.offsetDateTime != null)
+            {
+                val sdf = SimpleDateFormat("EEE, dd MMM, HH:mm", Locale.getDefault())
+                val date = sdf.format(notesModel.offsetDateTime)
+                binding.textReminder.text = date
+                binding.cardReminderTag.visibility = View.VISIBLE
+            }
+
             binding.cardRecycler
                 .setCardBackgroundColor(
                     ColorStateList

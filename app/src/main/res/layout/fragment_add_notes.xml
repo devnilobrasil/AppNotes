@@ -13,6 +13,7 @@
         android:id="@+id/fragment_add_notes"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         tools:context=".ui.AddNotesFragment">
 
         <androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -83,7 +84,7 @@
         android:textColorHint="@color/grey_500"
         app:expandedHintEnabled="false"
         app:hintTextColor="@color/grey_200"
-        app:layout_constraintBottom_toTopOf="@id/view_bottom"
+        app:layout_constraintBottom_toTopOf="@id/card_reminder_tag_add"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/input_Title">
@@ -119,6 +120,7 @@
             app:cardCornerRadius="0dp" />
 
         <TextView
+            android:id="@+id/app_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/app_name"
@@ -130,7 +132,56 @@
             app:layout_constraintTop_toTopOf="@id/view_bottom"
             app:layout_constraintStart_toStartOf="@id/view_bottom"
             app:layout_constraintEnd_toEndOf="@id/view_bottom"
-            app:layout_constraintBottom_toBottomOf="@id/view_bottom"/>
+            app:layout_constraintBottom_toBottomOf="@id/view_bottom" />
+
+
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_reminder_tag_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="12dp"
+            android:visibility="gone"
+            app:cardBackgroundColor="@color/grey_300"
+            app:cardCornerRadius="16dp"
+            app:layout_constraintBottom_toTopOf="@id/view_bottom"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/input_body"
+            app:strokeWidth="0dp">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp">
+
+                <TextView
+                    android:id="@+id/text_reminder"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lembrete"
+                    android:textColor="@color/black"
+                    android:textSize="13sp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@id/image_reminder"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ImageView
+                    android:id="@+id/image_reminder"
+                    android:layout_width="15dp"
+                    android:layout_height="15dp"
+                    android:layout_marginStart="4dp"
+                    android:importantForAccessibility="no"
+                    android:src="@drawable/ic_alarm"
+                    app:layout_constraintBottom_toBottomOf="@id/text_reminder"
+                    app:layout_constraintStart_toEndOf="@id/text_reminder"
+                    app:layout_constraintTop_toTopOf="@id/text_reminder" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </com.google.android.material.card.MaterialCardView>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

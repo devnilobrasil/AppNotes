@@ -9,6 +9,8 @@ import android.view.WindowManager
 import androidx.fragment.app.DialogFragment
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.ReminderNoteLayoutBinding
+import com.google.android.material.datepicker.CalendarConstraints
+import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
@@ -19,22 +21,33 @@ import java.util.*
 class ReminderDialog : DialogFragment()
 {
 
-    private val binding: ReminderNoteLayoutBinding by lazy { ReminderNoteLayoutBinding.inflate(layoutInflater) }
+    private val binding: ReminderNoteLayoutBinding by lazy {
+        ReminderNoteLayoutBinding.inflate(
+            layoutInflater
+        )
+    }
 
     private val calendar = Calendar.getInstance()
 
-    var dateLong : Long = 0L
+    var dateLong: Long? = null
 
-    override fun onCreateView(inflater: LayoutInflater,container: ViewGroup?,b: Bundle?
+    var dateText: String? = null
+
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, b: Bundle?
     ): View
     {
+
         return binding.root.let {
-            if(it.parent != null){
+            if (it.parent != null)
+            {
                 (it.parent as ViewGroup).removeView(it)
             }
             it
         }
     }
+
+
 
     override fun onStart()
     {
@@ -45,6 +58,11 @@ class ReminderDialog : DialogFragment()
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
+        if (dateText != null)
+        {
+            binding.buttonDateReminder.text = dateText
+        }
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
@@ -52,31 +70,35 @@ class ReminderDialog : DialogFragment()
 
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonDayReminder.setOnClickListener { datePicker() }
+        binding.buttonDateReminder.setOnClickListener { datePicker() }
         binding.buttonTimeReminder.setOnClickListener { timePicker() }
 
         binding.buttonConfirm.setOnClickListener {
             dismiss()
         }
         binding.buttonCancel.setOnClickListener { dismiss() }
+
     }
 
+    private fun datePicker()
+    {
+        val constraintsBuilder = CalendarConstraints.Builder()
+            .setValidator(DateValidatorPointForward.now())
 
-    private fun datePicker(){
         val datePick = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.pick_a_date)
-            .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+            .setCalendarConstraints(constraintsBuilder.build())
+            .setSelection(dateOnPicker())
             .build()
 
         datePick.addOnPositiveButtonClickListener {
 
-            val dateFormat = SimpleDateFormat("EEE, dd MMMM, yyyy", Locale.getDefault()).apply {
-                timeZone = TimeZone.getTimeZone("UTC")
-            }
+            val dateFormat = SimpleDateFormat("EEE, dd MMMM, yyyy", Locale.getDefault())
             dateLong = it
-            binding.buttonDayReminder.text = dateFormat.format(dateLong)
+            dateText = dateFormat.format(dateLong)
+            binding.buttonDateReminder.text = dateText
+            timePicker()
         }
-
         datePick.show(childFragmentManager, datePick.tag)
     }
 
@@ -101,6 +123,15 @@ class ReminderDialog : DialogFragment()
 
         }
         timePicker.show(childFragmentManager, timePicker.tag)
+    }
+
+    private fun dateOnPicker(): Long{
+        val date : Long = if (dateLong == null){
+            MaterialDatePicker.todayInUtcMilliseconds()
+        } else {
+            dateLong as Long
+        }
+        return date
     }
 
 }

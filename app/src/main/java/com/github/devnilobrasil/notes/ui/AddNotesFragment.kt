@@ -18,7 +18,6 @@ import com.google.android.material.appbar.MaterialToolbar
 import java.text.SimpleDateFormat
 import java.util.*
 
-
 class AddNotesFragment : Fragment()
 {
 
@@ -30,10 +29,11 @@ class AddNotesFragment : Fragment()
 
     private lateinit var topAppBar: MaterialToolbar
 
-    private var noteId = 0
+    var noteId = 0
 
     private val colorsDialog : ColorsDialog = ColorsDialog()
     private val reminderDialog : ReminderDialog = ReminderDialog()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,7 +58,13 @@ class AddNotesFragment : Fragment()
             binding.editBodyNotes.setText(it.body)
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
             colorsDialog.colorChoice = it.color
+            reminderDialog.dateLong = it.offsetDateTime
+            reminderDialog.dateText = timeStampToReminder(reminderDialog.dateLong)
             statusBarColor(it.color)
+            if (it.offsetDateTime != null){
+                binding.cardReminderTagAdd.visibility = View.VISIBLE
+                binding.textReminder.text = timeStampToTag(it.offsetDateTime)
+            }
         }
 
     }
@@ -79,7 +85,7 @@ class AddNotesFragment : Fragment()
                     this.title = titleNote
                     this.body = bodyNote
                     this.color = colorsDialog.colorChoice
-                    this.offsetDateTime = timeStampToString(reminderDialog.dateLong)
+                    this.offsetDateTime = reminderDialog.dateLong
 
                 }
                 notesViewModel.saveNotesDB(notesModel, requireContext())
@@ -139,10 +145,18 @@ class AddNotesFragment : Fragment()
         binding.viewBottom.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
     }
 
-    private fun timeStampToString(c: Long): String
+    private fun timeStampToReminder(long: Long?): String
     {
-        val sdf = SimpleDateFormat("EEE, dd MMM", Locale.getDefault())
-        return sdf.format(c)
+        val sdf = SimpleDateFormat("EEE, dd MMMM, yyyy", Locale.getDefault())
+        return sdf.format(long)
     }
+
+    private fun timeStampToTag(long: Long?): String
+    {
+        val sdf = SimpleDateFormat("EEE, dd MMMM, HH:mm", Locale.getDefault())
+        return sdf.format(long)
+    }
+
+
 
 }

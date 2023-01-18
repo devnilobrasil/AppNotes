@@ -27,7 +27,7 @@
         app:layout_constraintTop_toBottomOf="@id/text_reminder" />
 
     <Button
-        android:id="@+id/button_day_reminder"
+        android:id="@+id/button_date_reminder"
         style="@style/ThemeOverlay.Material3.Button.TextButton"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -62,12 +62,13 @@
         app:iconTint="@color/black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/button_day_reminder" />
+        app:layout_constraintTop_toBottomOf="@id/button_date_reminder" />
 
     <Button
         android:id="@+id/button_confirm"
         style="@style/ShapeAppearanceOverlay.Material3.Button"
         android:layout_width="wrap_content"
+
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:backgroundTint="@color/color_default"
@@ -83,6 +84,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="16dp"
+        android:textSize="12sp"
         android:fontFamily="@font/andika"
         android:text="@string/button_cancel"
         android:textAllCaps="true"
@@ -91,6 +93,22 @@
         app:layout_constraintBottom_toBottomOf="@id/button_confirm"
         app:layout_constraintEnd_toStartOf="@id/button_confirm"
         app:layout_constraintTop_toTopOf="@id/button_confirm" />
+
+    <TextView
+        android:visibility="gone"
+        android:id="@+id/button_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/andika"
+        android:text="@string/button_delete"
+        android:textAllCaps="true"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/button_cancel"
+        app:layout_constraintEnd_toStartOf="@id/button_cancel"
+        app:layout_constraintTop_toTopOf="@id/button_cancel" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

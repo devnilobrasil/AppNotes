@@ -24,8 +24,8 @@ interface NotesDao
     @Query("SELECT * FROM notesDB WHERE id = :id")
     fun getSpecificNote(id: Int): NotesModel
 
-    @Query("SELECT * FROM notesDB WHERE notesTime = :time")
-    fun getTimeNotes(time: Calendar): NotesModel
+    @Query("SELECT * FROM notesDB WHERE notesTime = :id")
+    fun getTimeNotes(id: Calendar): Long
 
     @Query("SELECT * FROM notesDB ORDER BY id DESC")
     fun getAllNotes() : List<NotesModel>

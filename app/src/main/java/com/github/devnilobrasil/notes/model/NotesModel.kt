@@ -24,7 +24,7 @@ class NotesModel
     var color : Int = DatabaseConstants.COLORS.IdColors.DEFAULT
 
     @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_TIME)
-    var offsetDateTime : String? = null
+    var offsetDateTime : Long? = null
 
 
 
