@@ -3,12 +3,13 @@
 
 # About Project
 
-I'm creating a Note-taking App to develop my Android development skills. In this app, are implemented concepts like:
+I'm creating a Note App to develop my Android development skills. In this app, are implemented concepts like:
 - Room Database
 - RecyclerView
 - Fragments
+- Search Bar
 - Dialog Fragments 
-- Dates and Time 
+- Date and Time 
 - MVVM architecture
 
 Consists of an application for notes displayed in Grid Layout. You can create notes to help users on a daily basis. Application under development.
@@ -61,8 +62,9 @@ And then a tag with the information will appear at the bottom of the screen.
 - Room Database
 - RecyclerView
 - Fragments
+- Search Bar
 - Dialog Fragments 
-- Dates and Time 
+- Date and Time 
 - MVVM architecture
 
 # Next Steps
