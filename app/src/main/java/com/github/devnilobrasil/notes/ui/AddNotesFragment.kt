@@ -11,12 +11,11 @@ import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
 import com.github.devnilobrasil.notes.helper.ColorsDialog
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
+import com.github.devnilobrasil.notes.helper.DateFormats
 import com.github.devnilobrasil.notes.helper.ReminderDialog
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
-import java.text.SimpleDateFormat
-import java.util.*
 
 class AddNotesFragment : Fragment()
 {
@@ -34,6 +33,8 @@ class AddNotesFragment : Fragment()
     private val colorsDialog : ColorsDialog = ColorsDialog()
     private val reminderDialog : ReminderDialog = ReminderDialog()
 
+    private val dateFormats : DateFormats = DateFormats()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -43,10 +44,8 @@ class AddNotesFragment : Fragment()
         notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
 
         observe()
-        addNotes()
         loadNotes()
         appTopBar()
-
 
         return binding.root
     }
@@ -58,17 +57,17 @@ class AddNotesFragment : Fragment()
             binding.editBodyNotes.setText(it.body)
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
             colorsDialog.colorChoice = it.color
-            reminderDialog.dateLong = it.offsetDateTime
-            reminderDialog.dateText = timeStampToReminder(reminderDialog.dateLong)
-            statusBarColor(it.color)
-            if (it.offsetDateTime != null){
-                binding.cardReminderTagAdd.visibility = View.VISIBLE
-                binding.textReminder.text = timeStampToTag(it.offsetDateTime)
+            if (it.offsetDateTime!=null){
+                reminderDialog.finalDate = it.offsetDateTime
+                reminderDialog.formattedDate = dateFormats.timeStampToReminder(it.offsetDateTime)
+                reminderDialog.formattedHour = dateFormats.formattedHour(it.offsetDateTime)
             }
+
+            statusBarColor(it.color)
+            reminderTag()
         }
 
     }
-
     private fun addNotes()
     {
             val titleNote = binding.editTitleNotes.text?.trim().toString()
@@ -85,7 +84,7 @@ class AddNotesFragment : Fragment()
                     this.title = titleNote
                     this.body = bodyNote
                     this.color = colorsDialog.colorChoice
-                    this.offsetDateTime = reminderDialog.dateLong
+                    this.offsetDateTime = reminderDialog.finalDate
 
                 }
                 notesViewModel.saveNotesDB(notesModel, requireContext())
@@ -145,18 +144,12 @@ class AddNotesFragment : Fragment()
         binding.viewBottom.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
     }
 
-    private fun timeStampToReminder(long: Long?): String
-    {
-        val sdf = SimpleDateFormat("EEE, dd MMMM, yyyy", Locale.getDefault())
-        return sdf.format(long)
+
+     private fun reminderTag(){
+        if (reminderDialog.finalDate != null){
+            binding.cardReminderTagAdd.visibility = View.VISIBLE
+            binding.textReminder.text = dateFormats.timeStampToTag(reminderDialog.finalDate)
+        }
     }
-
-    private fun timeStampToTag(long: Long?): String
-    {
-        val sdf = SimpleDateFormat("EEE, dd MMMM, HH:mm", Locale.getDefault())
-        return sdf.format(long)
-    }
-
-
 
 }

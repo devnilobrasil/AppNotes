@@ -1,11 +1,11 @@
 package com.github.devnilobrasil.notes.helper
 
+import android.os.Build
 import android.os.Bundle
 import android.text.format.DateFormat.is24HourFormat
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.WindowManager
+import android.view.*
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.ReminderNoteLayoutBinding
@@ -15,7 +15,7 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.timepicker.MaterialTimePicker
 import com.google.android.material.timepicker.MaterialTimePicker.INPUT_MODE_CLOCK
 import com.google.android.material.timepicker.TimeFormat
-import java.text.SimpleDateFormat
+import java.time.LocalDateTime
 import java.util.*
 
 class ReminderDialog : DialogFragment()
@@ -28,16 +28,22 @@ class ReminderDialog : DialogFragment()
     }
 
     private val calendar = Calendar.getInstance()
+    var selectedDate: Long? = null
 
-    var dateLong: Long? = null
+    var formattedDate: String? = null
+    var formattedHour: String? = null
 
-    var dateText: String? = null
+    var selectedHour: Int? = null
+    var selectedMinute: Int? = null
+
+    private val formatDate: DateFormats = DateFormats()
+
+    var finalDate: Long? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, b: Bundle?
     ): View
     {
-
         return binding.root.let {
             if (it.parent != null)
             {
@@ -47,8 +53,7 @@ class ReminderDialog : DialogFragment()
         }
     }
 
-
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onStart()
     {
         super.onStart()
@@ -58,28 +63,13 @@ class ReminderDialog : DialogFragment()
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-        if (dateText != null)
-        {
-            binding.buttonDateReminder.text = dateText
-        }
+        formattedDateTime()
+        clickListeners()
+        deleteButtonVisible()
 
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?)
-    {
-
-        super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonDateReminder.setOnClickListener { datePicker() }
-        binding.buttonTimeReminder.setOnClickListener { timePicker() }
-
-        binding.buttonConfirm.setOnClickListener {
-            dismiss()
-        }
-        binding.buttonCancel.setOnClickListener { dismiss() }
-
-    }
-
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun datePicker()
     {
         val constraintsBuilder = CalendarConstraints.Builder()
@@ -93,45 +83,141 @@ class ReminderDialog : DialogFragment()
 
         datePick.addOnPositiveButtonClickListener {
 
-            val dateFormat = SimpleDateFormat("EEE, dd MMMM, yyyy", Locale.getDefault())
-            dateLong = it
-            dateText = dateFormat.format(dateLong)
-            binding.buttonDateReminder.text = dateText
-            timePicker()
+            selectedDate = it
+            formattedDate = formatDate.timeStampToReminder(selectedDate)
+            binding.buttonDateReminder.text = formattedDate
         }
-        datePick.show(childFragmentManager, datePick.tag)
+        datePick.show(parentFragmentManager, datePick.tag)
     }
 
-    private fun timePicker(){
-        val hourOfDay = calendar.get(Calendar.HOUR_OF_DAY)
-        val minute = calendar.get(Calendar.MINUTE)
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun timePicker()
+    {
+        val hour = selectedHour ?: LocalDateTime.now().hour
+        val minute = selectedMinute ?: LocalDateTime.now().minute
 
         val is24Hour = is24HourFormat(requireContext())
         val clock = if (is24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
 
-        val timePicker = MaterialTimePicker.Builder()
+        MaterialTimePicker.Builder()
             .setTimeFormat(clock)
-            .setHour(hourOfDay)
+            .setHour(hour)
             .setMinute(minute)
             .setTitleText(R.string.pick_a_hour)
             .setInputMode(INPUT_MODE_CLOCK)
             .build()
-        timePicker.addOnPositiveButtonClickListener{
-            val mHour = if (timePicker.hour < 10) "0${timePicker.hour}" else timePicker.hour
-            val mMinute = if (timePicker.minute < 10) "0${timePicker.minute}" else timePicker.minute
-            binding.buttonTimeReminder.text = "$mHour:$mMinute"
+            .apply {
+                addOnPositiveButtonClickListener {
+                    onTimeSelected(this.hour, this.minute)
+                }
+            }.show(parentFragmentManager, MaterialDatePicker::class.java.canonicalName)
 
-        }
-        timePicker.show(childFragmentManager, timePicker.tag)
     }
 
-    private fun dateOnPicker(): Long{
-        val date : Long = if (dateLong == null){
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun onTimeSelected(hour: Int, minute: Int)
+    {
+        selectedHour = hour
+        selectedMinute = minute
+        val hourAsText = if (hour < 10) "0$hour" else hour
+        val minuteAsText = if (minute < 10) "0$minute" else minute
+
+        formattedHour = "$hourAsText:$minuteAsText"
+        binding.buttonTimeReminder.text = formattedHour
+    }
+
+    private fun dateOnPicker(): Long
+    {
+        val date: Long = if (selectedDate == null)
+        {
             MaterialDatePicker.todayInUtcMilliseconds()
-        } else {
-            dateLong as Long
+        }
+        else
+        {
+            selectedDate as Long
         }
         return date
+    }
+
+    private fun reminderTag()
+    {
+        val window: Window = requireActivity().window
+        if (finalDate != null){
+            window.findViewById<View>(R.id.card_reminder_tag_add).visibility = View.VISIBLE
+            window.findViewById<TextView>(R.id.text_reminder).text =
+                formatDate.timeStampToTag(finalDate)
+        } else {
+            window.findViewById<View>(R.id.card_reminder_tag_add).visibility = View.GONE
+        }
+
+    }
+
+    private fun dateAndTime(): Long
+    {
+        val today = MaterialDatePicker.todayInUtcMilliseconds()
+        var stamp = 0L
+        if (selectedMinute != null && selectedHour != null && selectedDate != null)
+        {
+            calendar.set(Calendar.MINUTE, selectedMinute!!)
+            calendar.set(Calendar.HOUR_OF_DAY, selectedHour!!)
+            calendar.set(Calendar.SECOND, 0)
+            stamp = (selectedDate!! - today) + calendar.timeInMillis
+        }
+        return stamp
+    }
+
+    private fun deleteDate()
+    {
+        formattedDate = null
+        formattedHour = null
+        selectedDate = null
+        finalDate = null
+        selectedHour = null
+        selectedMinute = null
+        binding.buttonTimeReminder.text = getString(R.string.pick_a_hour)
+        binding.buttonDateReminder.text = getString(R.string.pick_a_date)
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun clickListeners()
+    {
+        binding.buttonDateReminder.setOnClickListener {
+            datePicker()
+        }
+        binding.buttonTimeReminder.setOnClickListener { timePicker() }
+
+        binding.buttonConfirm.setOnClickListener {
+            finalDate = dateAndTime()
+            if (selectedDate != null) reminderTag()
+            dismiss()
+        }
+        binding.buttonCancel.setOnClickListener {
+            dismiss()
+        }
+        binding.buttonDelete.setOnClickListener {
+            deleteDate()
+            reminderTag()
+            dismiss()
+        }
+    }
+
+    private fun formattedDateTime()
+    {
+        if (formattedDate != null)
+        {
+            binding.buttonDateReminder.text = formattedDate
+        }
+
+        if (formattedHour != null)
+        {
+            binding.buttonTimeReminder.text = formattedHour
+        }
+    }
+
+    private fun deleteButtonVisible()
+    {
+        if (finalDate != null) binding.buttonDelete.visibility = View.VISIBLE
+        else binding.buttonDelete.visibility = View.GONE
     }
 
 }

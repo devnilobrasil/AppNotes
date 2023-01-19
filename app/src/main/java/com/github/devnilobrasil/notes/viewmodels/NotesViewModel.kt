@@ -32,4 +32,5 @@ class NotesViewModel(application: Application): AndroidViewModel(application)
     fun getNote(id: Int){
         _note.value = notesRepository.getSpecificNote(id)
     }
+
 }
