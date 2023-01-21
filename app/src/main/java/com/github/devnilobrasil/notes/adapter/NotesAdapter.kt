@@ -8,11 +8,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.NotesLayoutBinding
+import com.github.devnilobrasil.notes.helper.DateFormats
 import com.github.devnilobrasil.notes.helper.NotesListeners
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import java.text.SimpleDateFormat
-import java.util.*
 
 class NotesAdapter :
     RecyclerView.Adapter<NotesAdapter.NotesViewHolder>()
@@ -32,11 +31,10 @@ class NotesAdapter :
         {
             binding.textTitleNotes.text = notesModel.title
             binding.textBodyNotes.text = notesModel.body
-            if (notesModel.offsetDateTime != null)
+            if (notesModel.dateNotes != null)
             {
-                val sdf = SimpleDateFormat("EEE, dd MMM, HH:mm", Locale.getDefault())
-                val date = sdf.format(notesModel.offsetDateTime)
-                binding.textReminder.text = date
+                val dateFormats = DateFormats()
+                binding.textReminder.text = dateFormats.timeStampToTag(notesModel.dateNotes, notesModel.timeNotes)
                 binding.cardReminderTag.visibility = View.VISIBLE
             }
 

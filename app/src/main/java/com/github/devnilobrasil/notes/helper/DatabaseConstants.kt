@@ -13,6 +13,7 @@ class DatabaseConstants
             const val NOTES_TITLE = "notesTitle"
             const val NOTES_BODY = "notesBody"
             const val NOTES_COLOR = "notesColor"
+            const val NOTES_DATE = "notesDate"
             const val NOTES_TIME = "notesTime"
         }
     }

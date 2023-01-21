@@ -35,6 +35,8 @@ class AddNotesFragment : Fragment()
 
     private val dateFormats : DateFormats = DateFormats()
 
+    private var hour = 0
+    private var minute = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,12 +59,15 @@ class AddNotesFragment : Fragment()
             binding.editBodyNotes.setText(it.body)
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
             colorsDialog.colorChoice = it.color
-            if (it.offsetDateTime!=null){
-                reminderDialog.finalDate = it.offsetDateTime
-                reminderDialog.formattedDate = dateFormats.timeStampToReminder(it.offsetDateTime)
-                reminderDialog.formattedHour = dateFormats.formattedHour(it.offsetDateTime)
+            if (it.dateNotes != null){
+                reminderDialog.finalDate = it.dateNotes
+                reminderDialog.selectedDate = it.dateNotes
+                // Ver amanhã
+                reminderDialog.selectedHour = dateFormats.formattedHour(it.timeNotes).toInt()
+                reminderDialog.selectedMinute = dateFormats.formattedMinute(it.timeNotes).toInt()
+                reminderDialog.dateAsText = dateFormats.timeStampToReminder(it.dateNotes)
+                reminderDialog.timeAsText = it.timeNotes
             }
-
             statusBarColor(it.color)
             reminderTag()
         }
@@ -84,9 +89,12 @@ class AddNotesFragment : Fragment()
                     this.title = titleNote
                     this.body = bodyNote
                     this.color = colorsDialog.colorChoice
-                    this.offsetDateTime = reminderDialog.finalDate
+                    this.dateNotes = reminderDialog.selectedDate
+                    this.timeNotes = reminderDialog.timeAsText!!
 
                 }
+                hour = reminderDialog.selectedHour!!
+                minute = reminderDialog.selectedMinute!!
                 notesViewModel.saveNotesDB(notesModel, requireContext())
             }
     }
@@ -146,9 +154,9 @@ class AddNotesFragment : Fragment()
 
 
      private fun reminderTag(){
-        if (reminderDialog.finalDate != null){
+        if (reminderDialog.selectedDate != null){
             binding.cardReminderTagAdd.visibility = View.VISIBLE
-            binding.textReminder.text = dateFormats.timeStampToTag(reminderDialog.finalDate)
+            binding.textReminder.text = dateFormats.timeStampToTag(reminderDialog.finalDate, reminderDialog.timeAsText!!)
         }
     }
 

@@ -12,14 +12,24 @@ class DateFormats
         return sdf.format(long)
     }
 
-    fun timeStampToTag(long: Long?): String
+    fun timeStampToTag(long: Long?, time: String): String
     {
-        val sdf = SimpleDateFormat("EEE, dd MMMM, HH:mm", Locale.getDefault())
+
+        val sdf = SimpleDateFormat("EEE, dd MMMM, $time", Locale.getDefault())
         return sdf.format(long)
     }
 
-    fun formattedHour(long: Long?): String{
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        return sdf.format(long)
+//    fun formattedTime(long: Long?): String{
+//        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+//        return sdf.format(long)
+//    }
+
+    fun formattedHour(hour: String): String{
+        return hour.slice(0..1)
     }
+
+    fun formattedMinute(minute: String): String{
+        return minute.slice(3..4)
+    }
+
 }
