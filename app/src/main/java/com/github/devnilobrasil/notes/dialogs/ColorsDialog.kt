@@ -1,4 +1,4 @@
-package com.github.devnilobrasil.notes.helper
+package com.github.devnilobrasil.notes.dialogs
 
 import android.os.Bundle
 import android.view.*

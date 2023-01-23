@@ -12,10 +12,10 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
-import com.github.devnilobrasil.notes.helper.ColorsDialog
+import com.github.devnilobrasil.notes.dialogs.ColorsDialog
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.helper.DateFormats
-import com.github.devnilobrasil.notes.notification.ReminderDialog
+import com.github.devnilobrasil.notes.dialogs.ReminderDialog
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.notification.*
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
@@ -98,7 +98,6 @@ class AddNotesFragment : Fragment()
                 notesViewModel.saveNotesDB(notesModel, requireContext())
                 if (reminderDialog.selectedHour != null){
                     notificationNotes.scheduleNotification(activity, requireContext(), titleNote, bodyNote, reminderDialog).apply {
-
                     }
                 }
             }

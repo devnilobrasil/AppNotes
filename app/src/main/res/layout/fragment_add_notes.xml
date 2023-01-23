@@ -6,7 +6,7 @@
     <data>
         <variable
             name="color"
-            type="com.github.devnilobrasil.notes.helper.ColorsDialog" />
+            type="com.github.devnilobrasil.notes.dialogs.ColorsDialog" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,4 +1,4 @@
-package com.github.devnilobrasil.notes.notification
+package com.github.devnilobrasil.notes.dialogs
 
 import android.os.Build
 import android.os.Bundle

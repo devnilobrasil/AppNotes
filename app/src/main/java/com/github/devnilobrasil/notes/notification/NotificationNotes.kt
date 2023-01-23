@@ -10,6 +10,7 @@ import android.content.Intent
 import android.os.Build
 import android.util.Log
 import androidx.annotation.RequiresApi
+import com.github.devnilobrasil.notes.dialogs.ReminderDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
 

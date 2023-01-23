@@ -145,4 +145,6 @@ class HomeFragment : Fragment()
         val window: Window = requireActivity().window
         window.statusBarColor = ContextCompat.getColor(requireContext(), R.color.white)
     }
+
+
 }
