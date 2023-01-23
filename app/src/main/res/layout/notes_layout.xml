@@ -77,9 +77,9 @@
                     android:id="@+id/text_reminder"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Lembrete"
+                    android:text="@string/template_label_date"
                     android:textColor="@color/black"
-                    android:textSize="13sp"
+                    android:textSize="12sp"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toStartOf="@id/image_reminder"
                     app:layout_constraintStart_toStartOf="parent"
@@ -87,8 +87,8 @@
 
                 <ImageView
                     android:id="@+id/image_reminder"
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
                     android:layout_marginStart="4dp"
                     android:importantForAccessibility="no"
                     android:src="@drawable/ic_alarm"

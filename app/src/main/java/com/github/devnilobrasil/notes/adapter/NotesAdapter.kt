@@ -31,10 +31,10 @@ class NotesAdapter :
         {
             binding.textTitleNotes.text = notesModel.title
             binding.textBodyNotes.text = notesModel.body
-            if (notesModel.dateNotes != null)
+            if (notesModel.dateNotes != null && notesModel.timeNotes != null)
             {
                 val dateFormats = DateFormats()
-                binding.textReminder.text = dateFormats.timeStampToTag(notesModel.dateNotes, notesModel.timeNotes)
+                binding.textReminder.text = dateFormats.timeStampToTag(notesModel.dateNotes, notesModel.timeNotes!!)
                 binding.cardReminderTag.visibility = View.VISIBLE
             }
 

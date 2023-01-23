@@ -27,7 +27,7 @@ class NotesModel
     var dateNotes : Long? = null
 
     @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_TIME)
-    var timeNotes : String = ""
+    var timeNotes : String? = null
 
 
 

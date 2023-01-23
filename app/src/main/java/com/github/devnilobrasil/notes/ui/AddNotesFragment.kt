@@ -1,8 +1,11 @@
 package com.github.devnilobrasil.notes.ui
 
+import android.app.*
+import android.os.Build
 import android.os.Bundle
 import android.view.*
 import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
@@ -12,8 +15,9 @@ import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
 import com.github.devnilobrasil.notes.helper.ColorsDialog
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.helper.DateFormats
-import com.github.devnilobrasil.notes.helper.ReminderDialog
+import com.github.devnilobrasil.notes.notification.ReminderDialog
 import com.github.devnilobrasil.notes.model.NotesModel
+import com.github.devnilobrasil.notes.notification.*
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
 
@@ -28,16 +32,15 @@ class AddNotesFragment : Fragment()
 
     private lateinit var topAppBar: MaterialToolbar
 
-    var noteId = 0
+    private var noteId = 0
 
     private val colorsDialog : ColorsDialog = ColorsDialog()
     private val reminderDialog : ReminderDialog = ReminderDialog()
 
     private val dateFormats : DateFormats = DateFormats()
+    private val notificationNotes : NotificationNotes = NotificationNotes()
 
-    private var hour = 0
-    private var minute = 0
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -48,6 +51,7 @@ class AddNotesFragment : Fragment()
         observe()
         loadNotes()
         appTopBar()
+        notificationNotes.createNotificationChannel(activity)
 
         return binding.root
     }
@@ -60,9 +64,7 @@ class AddNotesFragment : Fragment()
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
             colorsDialog.colorChoice = it.color
             if (it.dateNotes != null){
-                reminderDialog.finalDate = it.dateNotes
                 reminderDialog.selectedDate = it.dateNotes
-                // Ver amanhã
                 reminderDialog.selectedHour = dateFormats.formattedHour(it.timeNotes).toInt()
                 reminderDialog.selectedMinute = dateFormats.formattedMinute(it.timeNotes).toInt()
                 reminderDialog.dateAsText = dateFormats.timeStampToReminder(it.dateNotes)
@@ -90,13 +92,18 @@ class AddNotesFragment : Fragment()
                     this.body = bodyNote
                     this.color = colorsDialog.colorChoice
                     this.dateNotes = reminderDialog.selectedDate
-                    this.timeNotes = reminderDialog.timeAsText!!
+                    this.timeNotes = reminderDialog.timeAsText
 
                 }
-                hour = reminderDialog.selectedHour!!
-                minute = reminderDialog.selectedMinute!!
                 notesViewModel.saveNotesDB(notesModel, requireContext())
+                if (reminderDialog.selectedHour != null){
+                    notificationNotes.scheduleNotification(activity, requireContext(), titleNote, bodyNote, reminderDialog).apply {
+
+                    }
+                }
             }
+
+
     }
 
     private fun loadNotes()
@@ -156,7 +163,7 @@ class AddNotesFragment : Fragment()
      private fun reminderTag(){
         if (reminderDialog.selectedDate != null){
             binding.cardReminderTagAdd.visibility = View.VISIBLE
-            binding.textReminder.text = dateFormats.timeStampToTag(reminderDialog.finalDate, reminderDialog.timeAsText!!)
+            binding.textReminder.text = dateFormats.timeStampToTag(reminderDialog.selectedDate, reminderDialog.timeAsText!!)
         }
     }
 

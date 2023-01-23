@@ -36,5 +36,6 @@
     <string name="time_format">%1d:%2d</string>
     <string name="button_delete">Deletar</string>
     <string name="error_time">A hora já foi ultrapassada</string>
+    <string name="template_label_date">Dia, Data, Hora</string>
 
 </resources>

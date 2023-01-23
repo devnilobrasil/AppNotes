@@ -1,4 +1,4 @@
-package com.github.devnilobrasil.notes.helper
+package com.github.devnilobrasil.notes.notification
 
 import android.os.Build
 import android.os.Bundle
@@ -10,6 +10,8 @@ import androidx.annotation.RequiresApi
 import androidx.fragment.app.DialogFragment
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.ReminderDialogLayoutBinding
+import com.github.devnilobrasil.notes.helper.DateFormats
+import com.github.devnilobrasil.notes.helper.HelperReminderDialog
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -29,17 +31,14 @@ class ReminderDialog : DialogFragment()
     }
 
     var selectedDate: Long? = null
+    var selectedHour: Int? = null
+    var selectedMinute: Int? = null
 
     var dateAsText: String? = null
     var timeAsText: String? = null
 
-    var selectedHour: Int? = null
-    var selectedMinute: Int? = null
-
     private val formatDate: DateFormats = DateFormats()
-
-    var finalDate: Long? = null
-
+    private val helperReminderDialog : HelperReminderDialog = HelperReminderDialog()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, b: Bundle?
@@ -66,7 +65,7 @@ class ReminderDialog : DialogFragment()
 
         formattedDateTime()
         clickListeners()
-        deleteButtonVisible()
+        helperReminderDialog.deleteButtonVisible(selectedDate, timeAsText, binding)
 
     }
 
@@ -83,6 +82,7 @@ class ReminderDialog : DialogFragment()
         binding.buttonConfirm.setOnClickListener {
             if (dateAsText != null && timeAsText != null && binding.textError.visibility == View.GONE)
             {
+                reminderTag()
                 dismiss()
             }
             else
@@ -93,14 +93,17 @@ class ReminderDialog : DialogFragment()
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            if (selectedDate != null) reminderTag()
+            //if (selectedDate != null && timeAsText != null)
 
         }
         binding.buttonCancel.setOnClickListener {
+            selectedDate = null
+            selectedHour = null
+            selectedMinute = null
             dismiss()
         }
         binding.buttonDelete.setOnClickListener {
-            deleteDate()
+            cleanDate()
             reminderTag()
             dismiss()
         }
@@ -109,13 +112,14 @@ class ReminderDialog : DialogFragment()
     @RequiresApi(Build.VERSION_CODES.O)
     private fun datePicker()
     {
+        val dateOnPicker = selectedDate ?: MaterialDatePicker.todayInUtcMilliseconds()
         val constraintsBuilder = CalendarConstraints.Builder()
             .setValidator(DateValidatorPointForward.now())
 
         val datePick = MaterialDatePicker.Builder.datePicker()
             .setTitleText(R.string.pick_a_date)
             .setCalendarConstraints(constraintsBuilder.build())
-            .setSelection(dateOnPicker())
+            .setSelection(dateOnPicker)
             .build()
 
         datePick.addOnPositiveButtonClickListener {
@@ -124,7 +128,7 @@ class ReminderDialog : DialogFragment()
             dateAsText = formatDate.timeStampToReminder(selectedDate)
             binding.buttonDateReminder.text = dateAsText
 
-            if (validateTime()) binding.textError.visibility = View.VISIBLE
+            if (helperReminderDialog.validateTime(selectedDate, selectedHour, selectedMinute)) binding.textError.visibility = View.VISIBLE
             else binding.textError.visibility = View.GONE
 
         }
@@ -136,7 +140,7 @@ class ReminderDialog : DialogFragment()
     private fun timePicker()
     {
         val hour = selectedHour ?: LocalDateTime.now().hour
-        val minute = selectedMinute ?: LocalDateTime.now().minute
+        val minute = selectedMinute ?: (LocalDateTime.now().minute + 1)
 
         val is24Hour = is24HourFormat(requireContext())
         val clock = if (is24Hour) TimeFormat.CLOCK_24H else TimeFormat.CLOCK_12H
@@ -169,7 +173,7 @@ class ReminderDialog : DialogFragment()
 
         if (selectedDate != null)
         {
-            if (validateTime())
+            if (helperReminderDialog.validateTime(selectedDate, selectedHour, selectedMinute))
             {
                 binding.textError.visibility = View.VISIBLE
                 timeAsText = "$hourAsText:$minuteAsText"
@@ -190,24 +194,10 @@ class ReminderDialog : DialogFragment()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun dateOnPicker(): Long
-    {
-        val date: Long = if (selectedDate == null)
-        {
-            MaterialDatePicker.todayInUtcMilliseconds()
-        }
-        else
-        {
-            selectedDate as Long
-        }
-        return date
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
     private fun reminderTag()
     {
         val window: Window = requireActivity().window
-        if (selectedDate != null)
+        if (selectedDate != null && timeAsText != null)
         {
             window.findViewById<View>(R.id.card_reminder_tag_add).visibility = View.VISIBLE
             window.findViewById<TextView>(R.id.text_reminder).text =
@@ -221,12 +211,11 @@ class ReminderDialog : DialogFragment()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun deleteDate()
+    private fun cleanDate()
     {
         dateAsText = null
         timeAsText = null
         selectedDate = null
-        finalDate = null
         selectedHour = null
         selectedMinute = null
         binding.buttonTimeReminder.text = getString(R.string.pick_a_hour)
@@ -238,39 +227,5 @@ class ReminderDialog : DialogFragment()
     {
         if (dateAsText != null) binding.buttonDateReminder.text = dateAsText
         if (timeAsText != null) binding.buttonTimeReminder.text = timeAsText
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun deleteButtonVisible()
-    {
-        if (finalDate != null) binding.buttonDelete.visibility = View.VISIBLE
-        else binding.buttonDelete.visibility = View.GONE
-    }
-
-    @RequiresApi(Build.VERSION_CODES.O)
-    private fun validateTime(): Boolean
-    {
-        val today = selectedDate!! == MaterialDatePicker.todayInUtcMilliseconds()
-        var validate = false
-
-        if (today)
-        {
-            if (selectedHour != null && selectedMinute != null)
-            {
-                if (selectedHour!! < LocalDateTime.now().hour)
-                {
-                    validate = true
-                }
-                else if (selectedHour!! == LocalDateTime.now().hour
-                    && selectedMinute!! < LocalDateTime.now().minute
-                )
-                {
-                    validate = true
-                }
-            }
-        }
-        else validate = false
-
-        return validate
     }
 }

@@ -19,17 +19,12 @@ class DateFormats
         return sdf.format(long)
     }
 
-//    fun formattedTime(long: Long?): String{
-//        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-//        return sdf.format(long)
-//    }
-
-    fun formattedHour(hour: String): String{
-        return hour.slice(0..1)
+    fun formattedHour(hour: String?): String{
+        return hour!!.slice(0..1)
     }
 
-    fun formattedMinute(minute: String): String{
-        return minute.slice(3..4)
+    fun formattedMinute(minute: String?): String{
+        return minute!!.slice(3..4)
     }
 
 }
