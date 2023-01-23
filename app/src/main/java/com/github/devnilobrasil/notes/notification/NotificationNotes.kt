@@ -1,15 +1,10 @@
 package com.github.devnilobrasil.notes.notification
 
-import android.app.Activity
-import android.app.AlarmManager
-import android.app.NotificationChannel
-import android.app.NotificationManager
-import android.app.PendingIntent
+import android.app.*
 import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.github.devnilobrasil.notes.dialogs.ReminderDialog
 import com.google.android.material.datepicker.MaterialDatePicker
 import java.util.*
@@ -33,15 +28,20 @@ class NotificationNotes
 
     }
 
-    @RequiresApi(Build.VERSION_CODES.O)
+
     fun createNotificationChannel(activity: Activity?){
-        val name = "Notif Channel"
-        val desc = "A description"
-        val importance = NotificationManager.IMPORTANCE_DEFAULT
-        val channel = NotificationChannel(channelID, name, importance)
-        channel.description = desc
-        val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-        notificationManager.createNotificationChannel(channel)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            val name = "Notif Channel"
+            val desc = "A description"
+            val importance = NotificationManager.IMPORTANCE_HIGH
+            val channel = NotificationChannel(channelID, name, importance)
+            channel.description = desc
+            channel.setShowBadge(true)
+            channel.enableVibration(true)
+            channel.vibrationPattern = longArrayOf(300, 300, 300)
+            val notificationManager = activity?.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
 
     }
 
