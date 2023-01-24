@@ -12,6 +12,7 @@ import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.ReminderDialogLayoutBinding
 import com.github.devnilobrasil.notes.helper.DateFormats
 import com.github.devnilobrasil.notes.helper.HelperReminderDialog
+import com.github.devnilobrasil.notes.notification.NotificationNotes
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -39,6 +40,7 @@ class ReminderDialog : DialogFragment()
 
     private val formatDate: DateFormats = DateFormats()
     private val helperReminderDialog : HelperReminderDialog = HelperReminderDialog()
+    private val notifications : NotificationNotes = NotificationNotes()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, b: Bundle?
@@ -62,10 +64,11 @@ class ReminderDialog : DialogFragment()
             WindowManager.LayoutParams.WRAP_CONTENT
         )
         dialog?.window?.setBackgroundDrawableResource(android.R.color.transparent)
+        dialog?.setCanceledOnTouchOutside(false)
 
         formattedDateTime()
         clickListeners()
-        helperReminderDialog.deleteButtonVisible(selectedDate, timeAsText, binding)
+        helperReminderDialog.changeNameCancelButton(selectedDate, timeAsText, binding)
 
     }
 
@@ -93,16 +96,9 @@ class ReminderDialog : DialogFragment()
                     Toast.LENGTH_SHORT
                 ).show()
             }
-            //if (selectedDate != null && timeAsText != null)
 
         }
         binding.buttonCancel.setOnClickListener {
-            selectedDate = null
-            selectedHour = null
-            selectedMinute = null
-            dismiss()
-        }
-        binding.buttonDelete.setOnClickListener {
             cleanDate()
             reminderTag()
             dismiss()
@@ -128,9 +124,9 @@ class ReminderDialog : DialogFragment()
             dateAsText = formatDate.timeStampToReminder(selectedDate)
             binding.buttonDateReminder.text = dateAsText
 
-            if (helperReminderDialog.validateTime(selectedDate, selectedHour, selectedMinute)) binding.textError.visibility = View.VISIBLE
+            if (helperReminderDialog.validateTime(selectedDate, selectedHour, selectedMinute))
+                binding.textError.visibility = View.VISIBLE
             else binding.textError.visibility = View.GONE
-
         }
         datePick.show(parentFragmentManager, datePick.tag)
 
@@ -220,6 +216,7 @@ class ReminderDialog : DialogFragment()
         selectedMinute = null
         binding.buttonTimeReminder.text = getString(R.string.pick_a_hour)
         binding.buttonDateReminder.text = getString(R.string.pick_a_date)
+        notifications.cancelNotification(requireContext())
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -228,4 +225,5 @@ class ReminderDialog : DialogFragment()
         if (dateAsText != null) binding.buttonDateReminder.text = dateAsText
         if (timeAsText != null) binding.buttonTimeReminder.text = timeAsText
     }
+
 }

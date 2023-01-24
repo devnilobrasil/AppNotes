@@ -10,7 +10,7 @@ import com.github.devnilobrasil.notes.MainActivity
 import com.github.devnilobrasil.notes.R
 
 
-const val notificationID = 1
+var notificationID = 1
 const val channelID = "channel1"
 const val titleExtra = "titleExtra"
 const val messageExtra = "messageExtra"
@@ -31,10 +31,9 @@ class Notification : BroadcastReceiver()
             .setSmallIcon(R.drawable.ic_alarm_notification)
             .setContentTitle(intent.getStringExtra(titleExtra))
             .setContentText(intent.getStringExtra(messageExtra))
-            .setTicker(intent.getStringExtra(titleExtra))
-            .setContentIntent(goToHomeFragment)
             .setDefaults(NotificationCompat.DEFAULT_ALL)
             .setPriority(NotificationCompat.PRIORITY_HIGH)
+            .setContentIntent(goToHomeFragment)
             .setAutoCancel(true)
             .build()
 

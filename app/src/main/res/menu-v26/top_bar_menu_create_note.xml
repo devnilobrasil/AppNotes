@@ -18,12 +18,5 @@
         app:showAsAction="ifRoom"
         />
 
-    <item
-        android:id="@+id/share"
-        android:contentDescription="@string/share_button_top"
-        android:icon="@drawable/ic_share"
-        android:title="@string/share_button_top"
-        app:showAsAction="ifRoom" />
-
 
 </menu>

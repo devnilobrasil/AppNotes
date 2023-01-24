@@ -11,6 +11,7 @@ import com.github.devnilobrasil.notes.databinding.NotesLayoutBinding
 import com.github.devnilobrasil.notes.helper.DateFormats
 import com.github.devnilobrasil.notes.helper.NotesListeners
 import com.github.devnilobrasil.notes.model.NotesModel
+import com.github.devnilobrasil.notes.notification.NotificationNotes
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class NotesAdapter :
@@ -58,6 +59,8 @@ class NotesAdapter :
                     .setPositiveButton(
                         R.string.button_yes
                     ) { _, _ ->
+                        val notifications = NotificationNotes()
+                        notifications.cancelNotification(itemView.context)
                         listeners.onDelete(notesModel.id)
                     }
                     .setNegativeButton(R.string.button_negative, null)

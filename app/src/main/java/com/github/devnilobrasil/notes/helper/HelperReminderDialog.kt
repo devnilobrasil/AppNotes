@@ -1,7 +1,6 @@
 package com.github.devnilobrasil.notes.helper
 
 import android.os.Build
-import android.view.View
 import androidx.annotation.RequiresApi
 import com.github.devnilobrasil.notes.databinding.ReminderDialogLayoutBinding
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -37,9 +36,9 @@ class HelperReminderDialog
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    fun deleteButtonVisible(date: Long?, timeAsText: String?, binding: ReminderDialogLayoutBinding)
+    fun changeNameCancelButton(date: Long?, timeAsText: String?, binding: ReminderDialogLayoutBinding)
     {
-        if (date != null && timeAsText != null) binding.buttonDelete.visibility = View.VISIBLE
-        else binding.buttonDelete.visibility = View.GONE
+        if (date != null && timeAsText != null) binding.buttonCancel.text = "DELETAR"
+        else binding.buttonCancel.text = "CANCELAR"
     }
 }

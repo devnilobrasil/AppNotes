@@ -4,7 +4,6 @@ import android.app.*
 import android.os.Build
 import android.os.Bundle
 import android.view.*
-import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -20,6 +19,7 @@ import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.notification.*
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
+import java.util.*
 
 class AddNotesFragment : Fragment()
 {
@@ -55,7 +55,6 @@ class AddNotesFragment : Fragment()
 
         return binding.root
     }
-
     private fun observe()
     {
         notesViewModel.note.observe(viewLifecycleOwner) {
@@ -75,6 +74,7 @@ class AddNotesFragment : Fragment()
         }
 
     }
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun addNotes()
     {
             val titleNote = binding.editTitleNotes.text?.trim().toString()
@@ -96,13 +96,10 @@ class AddNotesFragment : Fragment()
 
                 }
                 notesViewModel.saveNotesDB(notesModel, requireContext())
-                if (reminderDialog.selectedHour != null){
-                    notificationNotes.scheduleNotification(activity, requireContext(), titleNote, bodyNote, reminderDialog).apply {
-                    }
+                if (reminderDialog.selectedDate != null){
+                    notificationNotes.scheduleNotification(requireContext(), titleNote, bodyNote, reminderDialog)
                 }
             }
-
-
     }
 
     private fun loadNotes()
@@ -116,6 +113,7 @@ class AddNotesFragment : Fragment()
 
     }
 
+    @RequiresApi(Build.VERSION_CODES.O)
     private fun appTopBar()
     {
         topAppBar = binding.topAppBar
@@ -137,11 +135,6 @@ class AddNotesFragment : Fragment()
                 R.id.palette ->
                 {
                     colorsDialog.show(childFragmentManager, colorsDialog.tag)
-                    true
-                }
-                R.id.share ->
-                {
-                    Toast.makeText(requireContext(), "Share clicado", Toast.LENGTH_SHORT).show()
                     true
                 }
                 else -> false
