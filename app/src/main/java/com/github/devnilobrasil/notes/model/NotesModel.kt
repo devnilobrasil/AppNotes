@@ -29,6 +29,13 @@ class NotesModel
     @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_TIME)
     var timeNotes : String? = null
 
+    @ColumnInfo(name = DatabaseConstants.Notes.Column.NOTES_IMAGE)
+    var image: String? = null
+
+
+
+
+
 
 
 

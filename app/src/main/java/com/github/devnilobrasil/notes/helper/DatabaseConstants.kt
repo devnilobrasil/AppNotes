@@ -15,6 +15,7 @@ class DatabaseConstants
             const val NOTES_COLOR = "notesColor"
             const val NOTES_DATE = "notesDate"
             const val NOTES_TIME = "notesTime"
+            const val NOTES_IMAGE = "notesImage"
         }
     }
 
@@ -33,5 +34,4 @@ class DatabaseConstants
         }
 
     }
-
 }

@@ -12,17 +12,17 @@ import androidx.navigation.fragment.findNavController
 import com.github.devnilobrasil.notes.R
 import com.github.devnilobrasil.notes.databinding.FragmentAddNotesBinding
 import com.github.devnilobrasil.notes.dialogs.ColorsDialog
+import com.github.devnilobrasil.notes.dialogs.ReminderDialog
 import com.github.devnilobrasil.notes.helper.DatabaseConstants
 import com.github.devnilobrasil.notes.helper.DateFormats
-import com.github.devnilobrasil.notes.dialogs.ReminderDialog
 import com.github.devnilobrasil.notes.model.NotesModel
 import com.github.devnilobrasil.notes.notification.*
 import com.github.devnilobrasil.notes.viewmodels.NotesViewModel
 import com.google.android.material.appbar.MaterialToolbar
 import java.util.*
 
-class AddNotesFragment : Fragment()
-{
+
+class AddNotesFragment : Fragment() {
 
     private val binding: FragmentAddNotesBinding by lazy {
         FragmentAddNotesBinding.inflate(layoutInflater)
@@ -34,18 +34,17 @@ class AddNotesFragment : Fragment()
 
     private var noteId = 0
 
-    private val colorsDialog : ColorsDialog = ColorsDialog()
-    private val reminderDialog : ReminderDialog = ReminderDialog()
+    private val colorsDialog: ColorsDialog = ColorsDialog()
+    private val reminderDialog: ReminderDialog = ReminderDialog()
 
-    private val dateFormats : DateFormats = DateFormats()
-    private val notificationNotes : NotificationNotes = NotificationNotes()
+    private val dateFormats: DateFormats = DateFormats()
+    private val notificationNotes: NotificationNotes = NotificationNotes()
 
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View
-    {
+    ): View {
         notesViewModel = ViewModelProvider(this)[NotesViewModel::class.java]
 
         observe()
@@ -55,14 +54,14 @@ class AddNotesFragment : Fragment()
 
         return binding.root
     }
-    private fun observe()
-    {
+
+    private fun observe() {
         notesViewModel.note.observe(viewLifecycleOwner) {
             binding.editTitleNotes.setText(it.title)
             binding.editBodyNotes.setText(it.body)
             binding.topAppBar.title = getString(R.string.update_note_top_bar)
             colorsDialog.colorChoice = it.color
-            if (it.dateNotes != null){
+            if (it.dateNotes != null) {
                 reminderDialog.selectedDate = it.dateNotes
                 reminderDialog.selectedHour = dateFormats.formattedHour(it.timeNotes).toInt()
                 reminderDialog.selectedMinute = dateFormats.formattedMinute(it.timeNotes).toInt()
@@ -74,39 +73,38 @@ class AddNotesFragment : Fragment()
         }
 
     }
+
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun addNotes()
-    {
-            val titleNote = binding.editTitleNotes.text?.trim().toString()
-            val bodyNote = binding.editBodyNotes.text?.trim().toString()
+    private fun addNotes() {
+        val titleNote = binding.editTitleNotes.text?.trim().toString()
+        val bodyNote = binding.editBodyNotes.text?.trim().toString()
 
-            if (titleNote.isBlank() || bodyNote.isBlank())
-            {
-                return
-            }
-            else
-            {
-                val notesModel = NotesModel().apply {
-                    this.id = noteId
-                    this.title = titleNote
-                    this.body = bodyNote
-                    this.color = colorsDialog.colorChoice
-                    this.dateNotes = reminderDialog.selectedDate
-                    this.timeNotes = reminderDialog.timeAsText
+        if (titleNote.isBlank() || bodyNote.isBlank()) {
+            return
+        } else {
+            val notesModel = NotesModel().apply {
+                this.id = noteId
+                this.title = titleNote
+                this.body = bodyNote
+                this.color = colorsDialog.colorChoice
+                this.dateNotes = reminderDialog.selectedDate
+                this.timeNotes = reminderDialog.timeAsText
 
-                }
-                notesViewModel.saveNotesDB(notesModel, requireContext())
-                if (reminderDialog.selectedDate != null){
-                    notificationNotes.scheduleNotification(requireContext(), titleNote, bodyNote, reminderDialog)
-                }
             }
+            notesViewModel.saveNotesDB(notesModel, requireContext())
+            if (reminderDialog.selectedDate != null) {
+                notificationNotes.scheduleNotification(
+                    requireContext(),
+                    titleNote,
+                    bodyNote,
+                    reminderDialog)
+            }
+        }
     }
 
-    private fun loadNotes()
-    {
+    private fun loadNotes() {
         val bundle = arguments?.getInt(DatabaseConstants.Notes.ID)
-        if (bundle != null)
-        {
+        if (bundle != null) {
             noteId = bundle
             notesViewModel.getNote(noteId)
         }
@@ -114,8 +112,7 @@ class AddNotesFragment : Fragment()
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun appTopBar()
-    {
+    private fun appTopBar() {
         topAppBar = binding.topAppBar
 
         topAppBar.setNavigationOnClickListener {
@@ -125,15 +122,12 @@ class AddNotesFragment : Fragment()
         }
 
         topAppBar.setOnMenuItemClickListener {
-            when (it.itemId)
-            {
-                R.id.reminder ->
-                {
+            when (it.itemId) {
+                R.id.reminder -> {
                     reminderDialog.show(childFragmentManager, reminderDialog.tag)
                     true
                 }
-                R.id.palette ->
-                {
+                R.id.palette -> {
                     colorsDialog.show(childFragmentManager, colorsDialog.tag)
                     true
                 }
@@ -144,7 +138,7 @@ class AddNotesFragment : Fragment()
 
     }
 
-    private fun statusBarColor(color: Int){
+    private fun statusBarColor(color: Int) {
         val window: Window = requireActivity().window
         window.statusBarColor = ContextCompat.getColor(requireContext(), color)
         topAppBar.setBackgroundColor(ContextCompat.getColor(requireContext(), color))
@@ -152,11 +146,13 @@ class AddNotesFragment : Fragment()
     }
 
 
-     private fun reminderTag(){
-        if (reminderDialog.selectedDate != null){
+    private fun reminderTag() {
+        if (reminderDialog.selectedDate != null) {
             binding.cardReminderTagAdd.visibility = View.VISIBLE
-            binding.textReminder.text = dateFormats.timeStampToTag(reminderDialog.selectedDate, reminderDialog.timeAsText!!)
+            binding.textReminder.text =
+                dateFormats.timeStampToTag(reminderDialog.selectedDate, reminderDialog.timeAsText!!)
         }
     }
+
 
 }

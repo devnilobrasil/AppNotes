@@ -30,7 +30,6 @@ class ReminderDialog : DialogFragment()
             layoutInflater
         )
     }
-
     var selectedDate: Long? = null
     var selectedHour: Int? = null
     var selectedMinute: Int? = null

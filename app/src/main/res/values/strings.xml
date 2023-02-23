@@ -37,5 +37,6 @@
     <string name="button_delete">Deletar</string>
     <string name="error_time">A hora já foi ultrapassada</string>
     <string name="template_label_date">Dia, Data, Hora</string>
+    <string name="image_gallery">Image Gallery</string>
 
 </resources>
